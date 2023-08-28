@@ -5,21 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReceptenApp</title>
     <script>
+        //GET method 
         function toonKookgerei(){
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function(){
                 if(this.readyState == 4){
                     //console.log(this.responseText);
                     var alleKookgerei = JSON.parse(this.responseText);
+                    var eindString = "<table>";
                     for(var x = 0;x<alleKookgerei.length;x++){
-                        console.log(alleKookgerei[x].naam);
+                        eindString += "<tr><td>" + alleKookgerei[x].naam+"</td></tr>";
                     }
+                    eindString += "</table>";
+                    document.getElementById("alleKookgereiTab").innerHTML = eindString;
                 }
-                
             }
             xhr.open("GET","http://localhost:8082/allekookgerei",true);
             xhr.send();
         }
+
+        //POST method 
 
     </script>
 </head>
@@ -27,6 +32,6 @@
     Druk hier voor alle kookgerei
 
     <button onclick="toonKookgerei()">Toon alle Kookgerei</button>
-    <div id="alleAutosTab"> </div>
+    <div id="alleKookgereiTab"> </div>
 </body>
 </html>
