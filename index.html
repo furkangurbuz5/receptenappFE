@@ -12,7 +12,7 @@
                 if(this.readyState == 4){
                     //console.log(this.responseText);
                     var alleKookgerei = JSON.parse(this.responseText);
-                    var eindString = "<table>";
+                    var eindString = "<table border=1>";
                     for(var x = 0;x<alleKookgerei.length;x++){
                         eindString += "<tr><td>" + alleKookgerei[x].naam+"</td></tr>";
                     }
@@ -26,11 +26,16 @@
 
         //POST method 
 
+        function toevoegen(){
+            
+        }
+
     </script>
 </head>
 <body>
     Druk hier voor alle kookgerei
-
+    <input id="naamkookgerei">  
+    <button onclick="toevoegen()">Kookgerei toevoegen</button>
     <button onclick="toonKookgerei()">Toon alle Kookgerei</button>
     <div id="alleKookgereiTab"> </div>
 </body>
