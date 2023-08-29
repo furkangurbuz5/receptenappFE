@@ -62,16 +62,16 @@
             xhr.open("POST","http://localhost:8082/voegkookgereitoe",true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(deJSON);
-
         }
 
     </script>
 </head>
 <style>
     label {
-    display:inline-block;
-    width:110px;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+        display:inline-block;
+        width:110px;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        margin-bottom:10px;
     }
     li{
         list-style:none;
@@ -81,15 +81,18 @@
     }
     div{
         margin-top:10px;
+        margin-bottom:10px;
     }
-    button{
-        margin-top:5px;
+    td{
+        margin-bottom:10px;
     }
+    
     
 </style>
 
 <body>
     <header> <h1>ReceptenApp!</h1></header>
+        <header><h4>Voeg kookgerei toe:</h2></header>
         <li>
           <label for="naamkookgerei">Naam:</label>
           <input data-val-required="Het naam veld is verplicht." id="naamkookgerei"/>
@@ -111,7 +114,7 @@
            <input id="webshopkookgerei"/>
         </li>
         <button onclick="toevoegen()">Kookgerei toevoegen</button>
-        <button onclick="toonKookgerei()">Toon alle Kookgerei</button>
+        <button onclick="toonKookgerei()">Toon alle kookgerei</button>
         <div id="alleKookgereiNamenTabel"> </div>
 
 </body>
