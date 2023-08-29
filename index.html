@@ -27,7 +27,19 @@
         //POST method 
 
         function toevoegen(){
-            
+            var dekookgerei = {};
+            dekookgerei.owner = document.getElementById("naamkookgerei").value;
+            var deJSON = JSON.stringify(dekookgerei);
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    console.log("toevoegen gelukt");
+                }
+            }
+            xhr.open("POST","http://localhost:8082/voegkookgereitoe",true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(deJSON);
+
         }
 
     </script>
