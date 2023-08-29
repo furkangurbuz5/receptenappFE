@@ -1,0 +1,15 @@
+var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    //console.log(this.responseText);
+                    var alleKookgerei = JSON.parse(this.responseText);
+                    var eindString = "<table border=1>";
+                    for(var x = 0;x<alleKookgerei.length;x++){
+                        eindString += "<tr><td>" + alleKookgerei[x].naam+"</td></tr>";
+                    }
+                    eindString += "</table>";
+                    document.getElementById("alleKookgereiTab").innerHTML = eindString;
+                }
+            }
+            xhr.open("GET","http://localhost:8082/allekookgerei",true);
+            xhr.send();
