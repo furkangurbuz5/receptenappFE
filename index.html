@@ -14,9 +14,15 @@
                     var alleKookgerei = JSON.parse(this.responseText);
                     var eindString = "<table border=1>";
                     for(var x = 0;x<alleKookgerei.length;x++){
-                        eindString += "<tr><td>" + alleKookgerei[x].naam+
-                            "</td><td><button onclick=verwijderen("+alleKookgerei[x].kookgereiID+
-                                ")>verwijder</button></td></tr>";
+                        eindString += 
+                            "<tr><td>" + alleKookgerei[x].naam+
+                            "</td><td>"+alleKookgerei[x].type+
+                            "</td><td>"+alleKookgerei[x].materiaal+
+                            "</td><td>"+alleKookgerei[x].prijs+
+                            "</td><td>"+alleKookgerei[x].webshopLink+
+                            "</td><td><button onclick=verwijderen("
+                            +alleKookgerei[x].kookgereiID+
+                            ")>verwijder</button></td></tr>";
                     }
                     eindString += "</table>";
                     document.getElementById("alleKookgereiNamenTabel").innerHTML = eindString;
@@ -39,7 +45,7 @@
 
         //POST method 
         function toevoegen(){
-            var dekookgerei = {};
+            var dekookgerei = {}; //maakt hier een lege JSON variable  
             dekookgerei.naam = document.getElementById("naamkookgerei").value;
             dekookgerei.type = document.getElementById("typekookgerei").value;
             dekookgerei.materiaal = document.getElementById("matkookgerei").value;
@@ -116,6 +122,8 @@
         <button onclick="toevoegen()">Kookgerei toevoegen</button>
         <button onclick="toonKookgerei()">Toon alle Kookgerei</button>
         <div id="alleKookgereiNamenTabel"> </div>
+
+      
 
 </body>
 </html>
