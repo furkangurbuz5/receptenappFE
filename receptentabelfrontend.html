@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+         function toonRecepten(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+               console.log(this.responseText); 
+               var alleRecepten = JSON.parse(this.responseText);
+               var eindString = "<table border=1>"
+               for(var x = 0; x < alleRecepten.length; x++){
+                 eindString += "<tr><td>"+alleRecepten[x].naam+"</td><td><button onclick=verwijderen("+alleRecepten[x].id+")>verwijder</button></td></tr>";
+               }
+               eindString += "</table>";
+               document.getElementById("alleReceptenTabel").innerHTML = eindString;
+            }
+        }
+        xhr.open("GET","http://localhost:8082/derecepten", true);
+        xhr.send();
+    }
+    function toevoegen(){
+        var derecept = {};
+        derecept.naam = document.getElementById("naamrecept").value;
+        var deJSON = JSON.stringify(derecept);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+               console.log("toevoegen gelukt");
+            }
+        }
+        xhr.open("POST","http://localhost:8082/voegrecepttoe", true);
+        xhr.setRequestHeader("Content-type","application/json");
+        xhr.send(deJSON);
+    }
+    </script>
+</head>
+<body>
+    <input id="naamrecept">
+    <button onclick="toevoegen()">toevoegen</button>
+    <button onclick="toonRecepten()">Toon alle Recepten</button>
+    <div id="alleReceptenTabel"></div>
+    
+</body>
+</html>
