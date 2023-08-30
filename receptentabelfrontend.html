@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+
+
     <script>
          function toonRecepten(){
         var xhr = new XMLHttpRequest();
@@ -14,7 +16,18 @@
                var alleRecepten = JSON.parse(this.responseText);
                var eindString = "<table border=1>"
                for(var x = 0; x < alleRecepten.length; x++){
-                 eindString += "<tr><td>"+alleRecepten[x].naam+"</td><td><button onclick=verwijderen("+alleRecepten[x].id+")>verwijder</button></td></tr>";
+                 eindString += 
+                 "<tr><td>"+alleRecepten[x].naam+
+                "<tr><td>"+alleRecepten[x].aantal+
+                "<tr><td>"+alleRecepten[x].calorieen+
+                "<tr><td>"+alleRecepten[x].ingredienten+
+                "<tr><td>"+alleRecepten[x].bereiding+
+                "<tr><td>"+alleRecepten[x].categorie+
+                "<tr><td>"+alleRecepten[x].land+
+                "<tr><td>"+alleRecepten[x].tijd+
+                "</td><td><button onclick=verwijderen("+alleRecepten[x].id+")>verwijder</button></td></tr>";
+                
+
                }
                eindString += "</table>";
                document.getElementById("alleReceptenTabel").innerHTML = eindString;
@@ -26,6 +39,11 @@
     function toevoegen(){
         var derecept = {};
         derecept.naam = document.getElementById("naamrecept").value;
+        derecept.aantal = document.getElementById("aantalmensen").value;
+        derecept.calorieen = document.getElementById("calorieen").value;
+        derecept.ingredienten = document.getElementById("ingredienten").value;
+        derecept.land = document.getElementById("land").value;
+        derecept.tijd = document.getElementById("kooktijd").value;
         var deJSON = JSON.stringify(derecept);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){
@@ -40,10 +58,51 @@
     </script>
 </head>
 <body>
-    <input id="naamrecept">
+    
+    <li>
+     <label for="naamrecept">Naam:</label>
+     <input id="naamrecept">
+    </li>
+
+    <li>
+     <label for="aantalmensen">Aantal Personen:</label>
+     <input id="aantalmensen">
+    </li>
+    
+    <li>
+     <label for="calorieen">Calorieen:</label>
+     <input id="calorieen">
+    </li>
+
+    <li>
+     <label for="ingredienten">Ingredienten:</label>
+     <input id="ingredienten">
+    </li>
+
+    <li>
+        <label for="bereiding">Bereidingswijze:</label>
+        <input id="bereiding">
+    </li>
+
+    <li>
+        <label for="categorie">Categorie:</label>
+        <input id="categorie">
+    </li>
+    
+    <li>
+     <label for="land">Land Van Herkomst:</label>
+     <input id="land">
+    </li>
+
+    <li>
+     <label for="kooktijd">Kooktijd:</label>
+     <input id="kooktijd">
+    </li>
+    
     <button onclick="toevoegen()">toevoegen</button>
     <button onclick="toonRecepten()">Toon alle Recepten</button>
     <div id="alleReceptenTabel"></div>
-    
+
+
 </body>
 </html>
