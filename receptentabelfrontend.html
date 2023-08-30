@@ -21,6 +21,8 @@
                 "<tr><td>"+alleRecepten[x].aantal+
                 "<tr><td>"+alleRecepten[x].calorieen+
                 "<tr><td>"+alleRecepten[x].ingredienten+
+                "<tr><td>"+alleRecepten[x].bereiding+
+                "<tr><td>"+alleRecepten[x].categorie+
                 "<tr><td>"+alleRecepten[x].land+
                 "<tr><td>"+alleRecepten[x].tijd+
                 "</td><td><button onclick=verwijderen("+alleRecepten[x].id+")>verwijder</button></td></tr>";
@@ -75,6 +77,16 @@
     <li>
      <label for="ingredienten">Ingredienten:</label>
      <input id="ingredienten">
+    </li>
+
+    <li>
+        <label for="bereiding">Bereidingswijze:</label>
+        <input id="bereiding">
+    </li>
+
+    <li>
+        <label for="categorie">Categorie:</label>
+        <input id="categorie">
     </li>
     
     <li>
