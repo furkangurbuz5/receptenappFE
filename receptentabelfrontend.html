@@ -22,7 +22,6 @@
                 "<tr><td>"+alleRecepten[x].calorieen+
                 "<tr><td>"+alleRecepten[x].ingredienten+
                 "<tr><td>"+alleRecepten[x].bereiding+
-                "<tr><td>"+alleRecepten[x].categorie+
                 "<tr><td>"+alleRecepten[x].land+
                 "<tr><td>"+alleRecepten[x].tijd+
                 "</td><td><button onclick=verwijderen("+alleRecepten[x].id+")>verwijder</button></td></tr>";
@@ -40,10 +39,16 @@
         var derecept = {};
         derecept.naam = document.getElementById("naamrecept").value;
         derecept.aantal = document.getElementById("aantalmensen").value;
+        derecept.categorie = {
+        
+        } 
+        derecept.categorie.id = 1;
         derecept.calorieen = document.getElementById("calorieen").value;
         derecept.ingredienten = document.getElementById("ingredienten").value;
         derecept.land = document.getElementById("land").value;
         derecept.tijd = document.getElementById("kooktijd").value;
+        derecept.bereiding = document.getElementById("bereiding").value;
+
         var deJSON = JSON.stringify(derecept);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){
@@ -54,6 +59,17 @@
         xhr.open("POST","http://localhost:8082/voegrecepttoe", true);
         xhr.setRequestHeader("Content-type","application/json");
         xhr.send(deJSON);
+    }
+
+    function verwijderen(deid){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+
+            }
+        }
+        xhr.open("DELETE", "http://localhost:8082/verwijderrecept/"+deid, true);
+        xhr.send();
     }
     </script>
 </head>
@@ -82,11 +98,6 @@
     <li>
         <label for="bereiding">Bereidingswijze:</label>
         <input id="bereiding">
-    </li>
-
-    <li>
-        <label for="categorie">Categorie:</label>
-        <input id="categorie">
     </li>
     
     <li>
