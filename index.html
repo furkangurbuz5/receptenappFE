@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReceptenApp</title>
-    
+
+
+    <!-- <script src="testscript.js"></script> -->
+
     <script>
-        //GET method 
+
+        
+        //GET methods
         function toonKookgerei(){
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function(){
@@ -33,6 +38,36 @@
             xhr.send();
         }
 
+        // op dit moment kan zoeken op kookgerei naam. 
+        function zoeken(inputzoekkookgerei){
+            if(inputzoekkookgerei!=""){
+            var xhr = new XMLHttpRequest();
+            var eindString = "<table border=1>";
+            xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+                var gezocht = JSON.parse(this.responseText)
+
+                for(var x = 0;x<gezocht.length;x++){
+                    eindString += 
+                        "<tr><td>" +gezocht[x].naam+
+                        "</td><td>"+gezocht[x].type+
+                        "</td><td>"+gezocht[x].materiaal+
+                        "</td><td>"+gezocht[x].prijs+
+                        "</td><td>"+gezocht[x].webshopLink+
+                        "</td></tr>";
+                }
+                    eindString += "</table>";
+                    document.getElementById("gezochtTabel").innerHTML = eindString;
+            }
+        }
+            xhr.open("GET", "http://localhost:8082/zoekkookgerei/"+inputzoekkookgerei, true);
+            xhr.send();
+            console.log(inputzoekkookgerei);
+        }else{
+            alert("Zoek veld leeg.");
+        }
+        }
+
         //DELETE method 
         function verwijderen(deid){
             var xhr = new XMLHttpRequest();
@@ -48,25 +83,49 @@
         //POST method 
         function toevoegen(){
             var dekookgerei = {}; //maakt hier een lege JSON variable  
+            //JSON vullen met informatie met waarde van input field in forms 
             dekookgerei.naam = document.getElementById("naamkookgerei").value;
             dekookgerei.type = document.getElementById("typekookgerei").value;
             dekookgerei.materiaal = document.getElementById("matkookgerei").value;
             dekookgerei.prijs = document.getElementById("prijskookgerei").value;
             dekookgerei.webshopLink = document.getElementById("webshopkookgerei").value;
 
+            if(!dekookgerei.naam || !dekookgerei.prijs){
+                alert("Naam en prijs verplicht.")
+            }else{
             var deJSON = JSON.stringify(dekookgerei);
             var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function(){
-                if(this.readyState == 4){
-                    console.log(deJSON);
+                xhr.onreadystatechange = function(){
+                    if(this.readyState == 4){
+                        console.log(deJSON);
+                    }
                 }
-            }
             xhr.open("POST","http://localhost:8082/voegkookgereitoe",true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(deJSON);
             console.log("item toegevoegd.");
-
+            }
         }
+
+        
+
+        //     if(welke==2){
+        //     if(!hetrecept.naam){
+        //         alert('Naam is verplicht');
+        //     }else{
+        //         var deJSON = JSON.stringify(hetrecept);
+        //         var xhr = new XMLHttpRequest();
+        //         xhr.onreadystatechange = function(){
+        //             if(this.readyState == 4){
+        //                 console.log(deJSON);
+        //             }
+        //         }
+        //         xhr.open("POST","http://localhost:8082/voegrecepttoe",true);
+        //         xhr.setRequestHeader("Content-Type", "application/json");
+        //         xhr.send(deJSON);
+        //         console.log("recept toegevoegd.");
+        //     }
+        // }
 
         function clearFields(){
             document.getElementById("naamkookgerei").value ="";
@@ -80,15 +139,9 @@
             document.getElementById("alleKookgereiTabel").innerHTML = "";
         }
 
-        // function loading(){
-        //     console.log(($('form')[0].checkValidity()));
-        //     if($('form')[0].checkValidity()){
-        //         toevoegen();
-        //     }
-        // }
-
     </script>
 </head>
+
 <style>
     label {
         display:inline-block;
@@ -112,34 +165,35 @@
     #loading{
         display:none;
     }
-    
-    
 </style>
 
 <body>
     <header> <h1>ReceptenApp!</h1></header>
         <header><h4>Voeg kookgerei toe:</h2></header>
-            <form>
-                <label for="naamkookgerei">Naam:</label>
-                <input data-val-required="Het naam veld is verplicht." id="naamkookgerei" required="required"/><br>
-                <label for="typekookgerei">Type:</label>
-                <input id="typekookgerei"/><br>
-                <label for="matkookgerei">Materiaal:</label>
-                <input id="matkookgerei"/><br>
-                <label for="prijskookgerei">Prijs:</label>
-                <input id="prijskookgerei"/><br>
-                <label for="webshopkookgerei">Webshoplink:</label>
-                <input id="webshopkookgerei"/><br><br> 
-                <input type="submit" value="Maak kookgerei aan" onclick="toevoegen()" >
-            </form><br>
-        <!-- <button onclick="toevoegen()" >Kookgerei toevoegen</button> -->
+            
+        <label for="naamkookgerei">Naam:</label>
+        <input id="naamkookgerei"/><br>
+        <label for="typekookgerei">Type:</label>
+        <input id="typekookgerei"/><br>
+        <label for="matkookgerei">Materiaal:</label>
+        <input id="matkookgerei"/><br>
+        <label for="prijskookgerei">Prijs:</label>
+        <input id="prijskookgerei"/><br>
+        <label for="webshopkookgerei">Webshoplink:</label>
+        <input id="webshopkookgerei"/><br> 
+        <!-- <input type="submit" value="Maak kookgerei aan" onclick="toevoegen()" />  -->
+           
+        <button onclick="toevoegen()">Toevoegen</button>
         <button onclick="clearFields()">Reset invoer</button><br><br>
-        
         <button onclick="toonKookgerei()">Toon/refresh alle kookgerei</button>
         <div id="alleKookgereiTabel"> </div>
-        <button onclick="clearTable()">Reset tabel</button>
-        
+        <button onclick="clearTable()">Verstop tabel</button><br><br>
 
+        <header><h4>Zoek kookgerei:</h4></header>
+        <input id="inputzoekkookgerei">
+        <button onclick="zoeken(document.getElementById('inputzoekkookgerei').value)">Zoek</button><br>
+        <div id="gezochtTabel"></div>
+        
 
 </body>
 </html>
