@@ -90,18 +90,18 @@
     }
 
     function opslaan(deid, nieuwenaam){
-        var derecept = {};
+        var derecept= {};
         derecept.naam = document.getElementById("naamrecepta").value;
         derecept.aantal = document.getElementById("aantalrecepta").value;
         derecept.calorieen = document.getElementById("calorieenrecepta").value;
         derecept.ingredienten = document.getElementById("ingredientenrecepta").value;
         derecept.bereiding = document.getElementById("bereidingrecepta").value;
         derecept.land = document.getElementById("landrecepta").value;
-        //derecept.tijd = document.getElementById("tijdrecepta").value;
+        derecept.tijd = document.getElementById("tijdrecepta").value;
         alert(derecept.naam);
         var deJSON = JSON.stringify(derecept);
         var xhr = new XMLHttpRequest();
-        xhr.open("PUT","http://localhost:8082/aanpassen/"+deid+"/"+derecept.naam, true );
+        xhr.open("PUT","http://localhost:8082/recept/aanpassen/"+deid+"/"+derecept.naam, true );
         xhr.setRequestHeader("Content-type", "application/json");
         if(this.readyState == 4){
 
