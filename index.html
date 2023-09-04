@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReceptenApp</title>
 
-
-    <!-- <script src="testscript.js"></script> -->
-
     <script>
         //GET methods
         function toonKookgerei(){
@@ -37,8 +34,8 @@
         }
 
         //  comment
-        function zoeken(inputzoekkookgerei){
-            if(inputzoekkookgerei!=""){
+        function zoeken(zoekopdracht){
+            if(zoekopdracht!=""){
             var xhr = new XMLHttpRequest();
             var eindString = "<table border=1>";
             xhr.onreadystatechange = function(){
@@ -58,16 +55,16 @@
                         document.getElementById("gezochtTabel").innerHTML = eindString;
                 }
             }
-            console.log(parseInt(inputzoekkookgerei));
-            if (isNaN(parseInt(inputzoekkookgerei))){  
-                    xhr.open("GET", "http://localhost:8082/zoeknaam/"+inputzoekkookgerei, true);
+            console.log(parseInt(zoekopdracht));
+            if (isNaN(parseInt(zoekopdracht))){  
+                    xhr.open("GET", "http://localhost:8082/zoeknaam/"+zoekopdracht, true);
                     xhr.send();
-                    console.log(inputzoekkookgerei);
+                    console.log(zoekopdracht);
                     console.log(document.getElementById("inputzoekkookgerei").type);
             } else {
-                    xhr.open("GET", "http://localhost:8082/zoekprijs/"+inputzoekkookgerei, true);
+                    xhr.open("GET", "http://localhost:8082/zoekprijs/"+zoekopdracht, true);
                     xhr.send();
-                    console.log(inputzoekkookgerei);
+                    console.log(zoekopdracht);
             }
         }else{
             alert("Zoek veld leeg.");
@@ -177,11 +174,37 @@
         <div id="alleKookgereiTabel"> </div>
         <button onclick="clearTable()">Verstop tabel</button><br><br>
 
+        <header><h4>Zoek:</h4></header>
+        <input id="inputzoek">
+        <button onclick="zoeken(document.getElementById('inputzoek').value)">Zoek</button><br>
+        <div id="gezochtTabel"></div>
+
         <header><h4>Zoek op naam kookgerei:</h4></header>
         <input id="inputzoekkookgerei">
         <button onclick="zoeken(document.getElementById('inputzoekkookgerei').value)">Zoek</button><br>
         <div id="gezochtTabel"></div>
         
+        <header><h4>Zoek op categorie:</h4></header>
+        <input id="inputzoekcategorie">
+        <button onclick="zoeken(document.getElementById('inputzoekcategorie').value)">Zoek</button><br>
+        <div id="gezochtTabel"></div>
+        
+        <header><h4>Zoek op gebruiker:</h4></header>
+        <input id="inputzoekgebruiker">
+        <button onclick="zoeken(document.getElementById('inputzoekgebruiker').value)">Zoek</button><br>
+        <div id="gezochtTabel"></div>
+        
+        <header><h4>Zoek op recensie:</h4></header>
+        <input id="inputzoekrecensie">
+        <button onclick="zoeken(document.getElementById('inputzoekrecensie').value)">Zoek</button><br>
+        <div id="gezochtTabel"></div>
+        
+        <header><h4>Zoek op recept:</h4></header>
+        <input id="inputzoekrecept">
+        <button onclick="zoeken(document.getElementById('inputzoekrecept').value)">Zoek</button><br>
+        <div id="gezochtTabel"></div>
+        
+
 
 </body>
 </html>
