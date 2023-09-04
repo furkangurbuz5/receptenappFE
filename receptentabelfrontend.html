@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+
+
     <script>
          function toonRecepten(){
         var xhr = new XMLHttpRequest();
@@ -14,7 +16,18 @@
                var alleRecepten = JSON.parse(this.responseText);
                var eindString = "<table border=1>"
                for(var x = 0; x < alleRecepten.length; x++){
-                 eindString += "<tr><td>"+alleRecepten[x].naam+"</td><td><button onclick=verwijderen("+alleRecepten[x].id+")>verwijder</button></td></tr>";
+                 eindString += 
+                 "<tr><td id=\"naamfield"+alleRecepten[x].id+"\">"+alleRecepten[x].naam+"</td></tr>"+
+                 "<tr><td id =\"aantalfield"+alleRecepten[x].id+"\">"+alleRecepten[x].aantal+"</td></tr>"+
+                 "<tr><td id =\"calorieenfield"+alleRecepten[x].id+"\">"+alleRecepten[x].calorieen+"</td></tr>"+
+                 "<tr><td id =\"ingredientenfield"+alleRecepten[x].id+"\">"+alleRecepten[x].ingredienten+"</td></tr>"+
+                 "<tr><td id =\"bereidingfield"+alleRecepten[x].id+"\">"+alleRecepten[x].bereiding+"</td></tr>"+
+                 "<tr><td id =\"landfield"+alleRecepten[x].id+"\">"+alleRecepten[x].land+"</td></tr>"+
+                 "<tr><td id =\"tijdfield"+alleRecepten[x].id+"\">"+alleRecepten[x].tijd+"</td></tr>"+
+                 "<tr><td><button onclick=verwijderen("+alleRecepten[x].id+")>Verwijder</button></td><td><button onclick=aanpassen("+alleRecepten[x].id+")>Aanpassen</button></td><td><button onclick=opslaan("+alleRecepten[x].id+")>Opslaan</button></tr>"
+               
+                
+
                }
                eindString += "</table>";
                document.getElementById("alleReceptenTabel").innerHTML = eindString;
@@ -24,11 +37,20 @@
         xhr.send();
     }
     function toevoegen(){
+        
         var derecept = {};
         derecept.naam = document.getElementById("naamrecept").value;
+
+        derecept.aantal = document.getElementById("aantalmensen").value;
         derecept.categorie = {
-            id:1
-        };
+                } 
+        derecept.categorie.id = 1;
+        derecept.calorieen = document.getElementById("calorieen").value;
+        derecept.ingredienten = document.getElementById("ingredienten").value;
+        derecept.land = document.getElementById("land").value;
+        derecept.tijd = document.getElementById("kooktijd").value;
+        derecept.bereiding = document.getElementById("bereiding").value;
+
 
         var deJSON = JSON.stringify(derecept);
         var xhr = new XMLHttpRequest();
@@ -41,14 +63,120 @@
         xhr.setRequestHeader("Content-Type","application/json");
         xhr.send(deJSON);
     }
+    
+
+    function verwijderen(deid){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+
+            }
+        }
+        xhr.open("DELETE", "http://localhost:8082/verwijderrecept/"+deid, true);
+        xhr.send();
+    }
+
+    function aanpassen(deid){
+        alert(deid);
+        document.getElementById("naamfield"+deid).innerHTML="<input id=\"naamrecepta\">"
+        document.getElementById("aantalfield"+deid).innerHTML="<input id=\"aantalrecepta\">"
+        document.getElementById("calorieenfield"+deid).innerHTML="<input id=\"calorieenrecepta\">"
+        document.getElementById("ingredientenfield"+deid).innerHTML="<input id=\"ingredientenrecepta\">"
+        document.getElementById("bereidingfield"+deid).innerHTML="<input id=\"bereidingrecepta\">"
+        document.getElementById("landfield"+deid).innerHTML="<input id=\"landrecepta\">"
+        document.getElementById("tijdfield"+deid).innerHTML="<input id=\"tijdrecepta\">"
+        
+      
+
+    }
+
+    function opslaan(deid, nieuwenaam){
+        var derecept = {};
+        derecept.naam = document.getElementById("naamrecepta").value;
+        derecept.aantal = document.getElementById("aantalrecepta").value;
+        derecept.calorieen = document.getElementById("calorieenrecepta").value;
+        derecept.ingredienten = document.getElementById("ingredientenrecepta").value;
+        derecept.bereiding = document.getElementById("bereidingrecepta").value;
+        derecept.land = document.getElementById("landrecepta").value;
+        //derecept.tijd = document.getElementById("tijdrecepta").value;
+        alert(derecept.naam);
+        var deJSON = JSON.stringify(derecept);
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT","http://localhost:8082/aanpassen/"+deid+"/"+derecept.naam, true );
+        xhr.setRequestHeader("Content-type", "application/json");
+        if(this.readyState == 4){
+
+        }
+        xhr.send(deJSON);   
+        }
+        
+        
+    
     </script>
 </head>
+
+<style>
+    label {
+        display:inline-block;
+        width:200px;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        margin-bottom:10px;
+    }
+    li{
+        list-style:none;
+    }
+    header{
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+    div{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    td{
+        margin-bottom:10px;
+    }
+</style>
 <body>
-    <input id="naamrecept">
     
-    <button onclick="toevoegen()">toevoegen</button>
+    <li>
+     <label for="naamrecept">Naam:</label>
+     <input id="naamrecept">
+    </li>
+
+    <li>
+     <label for="aantalmensen">Aantal Personen:</label>
+     <input id="aantalmensen">
+    </li>
+    
+    <li>
+     <label for="calorieen">Calorieen:</label>
+     <input id="calorieen">
+    </li>
+
+    <li>
+     <label for="ingredienten">Ingredienten:</label>
+     <input id="ingredienten">
+    </li>
+
+    <li>
+        <label for="bereiding">Bereidingswijze:</label>
+        <input id="bereiding">
+    </li>
+    
+    <li>
+     <label for="land">Land Van Herkomst:</label>
+     <input id="land">
+    </li>
+
+    <li>
+     <label for="kooktijd">Kooktijd:</label>
+     <input id="kooktijd">
+    </li>
+    
+    <button onclick="toevoegen()">Toevoegen</button>
     <button onclick="toonRecepten()">Toon alle Recepten</button>
     <div id="alleReceptenTabel"></div>
-    
+
+
 </body>
 </html>
