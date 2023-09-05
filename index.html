@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReceptenApp</title>
-
+    <script src="js/script.js"></script>
     <script>
+        var db = "http://20.8.203.9:8082";
+        window.onload=function(){
+            abc();
+            
+            
+        }
+        
         //GET methods
         function toonKookgerei(){
             var xhr = new XMLHttpRequest();
@@ -29,7 +36,7 @@
                     document.getElementById("alleKookgereiTabel").innerHTML = eindString;
                 }
             }
-            xhr.open("GET","http://localhost:8082/allekookgerei",true);
+            xhr.open("GET","http://20.8.203.9:8082/allekookgerei",true);
             xhr.send();
         }
 
@@ -57,12 +64,12 @@
             }
             console.log(parseInt(zoekopdracht));
             if (isNaN(parseInt(zoekopdracht))){  
-                    xhr.open("GET", "http://localhost:8082/zoeknaam/"+zoekopdracht, true);
+                    xhr.open("GET", "http://20.8.203.9:8082/zoeknaam/"+zoekopdracht, true);
                     xhr.send();
                     console.log(zoekopdracht);
                     console.log(document.getElementById("inputzoekkookgerei").type);
             } else {
-                    xhr.open("GET", "http://localhost:8082/zoekprijs/"+zoekopdracht, true);
+                    xhr.open("GET", "http://20.8.203.9:8082/zoekprijs/"+zoekopdracht, true);
                     xhr.send();
                     console.log(zoekopdracht);
             }
@@ -79,7 +86,7 @@
                 if(this.readyState == 4){
                 }
             }
-            xhr.open("DELETE", "http://localhost:8082/verwijderkookgerei/"+deid, true);
+            xhr.open("DELETE", "http://20.8.203.9:8082/verwijderkookgerei/"+deid, true);
             xhr.send();
             console.log("item verwijderd");
         }
@@ -104,7 +111,7 @@
                         console.log(deJSON);
                     }
                 }
-            xhr.open("POST","http://localhost:8082/voegkookgereitoe",true);
+            xhr.open("POST","http://20.8.203.9:8082/voegkookgereitoe",true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(deJSON);
             console.log("item toegevoegd.");
@@ -153,6 +160,7 @@
 </style>
 
 <body>
+    <div id="menudiv"></div>
     <header> <h1>ReceptenApp!</h1></header>
         <header><h4>Voeg kookgerei toe:</h2></header>
             

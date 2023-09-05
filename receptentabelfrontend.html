@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-
-
+    <script src="js/script.js"></script>
     <script>
-         function toonRecepten(){
+        window.onload=function(){
+            abc();
+        }
+
+        function toonRecepten(){
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){
             if(this.readyState == 4){
@@ -137,7 +140,7 @@
     }
 </style>
 <body>
-    
+    <div id="menudiv"></div>
     <li>
      <label for="naamrecept">Naam:</label>
      <input id="naamrecept">
