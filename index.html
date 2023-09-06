@@ -8,39 +8,34 @@
     <script>
         var db = "http://20.8.203.9:8082";
         window.onload=function(){
-            abc();
-            
-            
+            menu();
         }
         
-        //GET methods
         function toonKookgerei(){
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function(){
-                if(this.readyState == 4){
-                    //console.log(this.responseText);
-                    var alleKookgerei = JSON.parse(this.responseText);
-                    var eindString = "<table border=1>";
-                    for(var x = 0;x<alleKookgerei.length;x++){
-                        eindString += 
-                            "<tr><td>" + alleKookgerei[x].naam+
-                            "</td><td>"+alleKookgerei[x].type+
-                            "</td><td>"+alleKookgerei[x].materiaal+
-                            "</td><td>"+alleKookgerei[x].prijs+
-                            "</td><td>"+alleKookgerei[x].webshopLink+
-                            "</td><td><button onclick=verwijderen("
-                            +alleKookgerei[x].kookgereiID+
-                            ")>verwijder</button></td></tr>";
-                    }
-                    eindString += "</table>";
-                    document.getElementById("alleKookgereiTabel").innerHTML = eindString;
-                }
-            }
-            xhr.open("GET","http://20.8.203.9:8082/allekookgerei",true);
-            xhr.send();
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+		if(this.readyState == 4){
+			var alleKookgerei = JSON.parse(this.responseText);
+			var eindString = "<table border=1>";
+			for(var x = 0;x<alleKookgerei.length;x++){
+				eindString += 
+					"<tr><td>" + alleKookgerei[x].naam+
+					"</td><td>"+alleKookgerei[x].type+
+					"</td><td>"+alleKookgerei[x].materiaal+
+					"</td><td>"+alleKookgerei[x].prijs+
+					"</td><td>"+alleKookgerei[x].webshopLink+
+					"</td><td><button onclick=verwijderen("
+					+alleKookgerei[x].kookgereiID+
+					")>verwijder</button></td></tr>";
+			}
+			eindString += "</table>";
+			document.getElementById("alleKookgereiTabel").innerHTML = eindString;
+		}
+	    }
+        xhr.open("GET",db+"/allekookgerei",true);
+        xhr.send();
         }
-
-        //  comment
+        
         function zoeken(zoekopdracht){
             if(zoekopdracht!=""){
             var xhr = new XMLHttpRequest();
@@ -182,35 +177,12 @@
         <div id="alleKookgereiTabel"> </div>
         <button onclick="clearTable()">Verstop tabel</button><br><br>
 
-        <header><h4>Zoek:</h4></header>
-        <input id="inputzoek">
-        <button onclick="zoeken(document.getElementById('inputzoek').value)">Zoek</button><br>
-        <div id="gezochtTabel"></div>
-
         <header><h4>Zoek op naam kookgerei:</h4></header>
         <input id="inputzoekkookgerei">
         <button onclick="zoeken(document.getElementById('inputzoekkookgerei').value)">Zoek</button><br>
         <div id="gezochtTabel"></div>
         
-        <header><h4>Zoek op categorie:</h4></header>
-        <input id="inputzoekcategorie">
-        <button onclick="zoeken(document.getElementById('inputzoekcategorie').value)">Zoek</button><br>
-        <div id="gezochtTabel"></div>
         
-        <header><h4>Zoek op gebruiker:</h4></header>
-        <input id="inputzoekgebruiker">
-        <button onclick="zoeken(document.getElementById('inputzoekgebruiker').value)">Zoek</button><br>
-        <div id="gezochtTabel"></div>
-        
-        <header><h4>Zoek op recensie:</h4></header>
-        <input id="inputzoekrecensie">
-        <button onclick="zoeken(document.getElementById('inputzoekrecensie').value)">Zoek</button><br>
-        <div id="gezochtTabel"></div>
-        
-        <header><h4>Zoek op recept:</h4></header>
-        <input id="inputzoekrecept">
-        <button onclick="zoeken(document.getElementById('inputzoekrecept').value)">Zoek</button><br>
-        <div id="gezochtTabel"></div>
         
 
 

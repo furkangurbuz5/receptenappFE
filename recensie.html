@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/script.js"></script>
+<script>
+
+    window.onload=function(){
+        menu();
+    }
+   
+    function toonRecensie(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+		if(this.readyState == 4){
+			var alleRecensie = JSON.parse(this.responseText);
+			var eindString = "<table border=1>";
+			for(var x = 0;x<alleRecensie.length;x++){
+				eindString += 
+					"<tr><td>" + alleRecensie[x].naam+
+					"</td><td>"+alleRecensie[x].titel+
+					"</td><td>"+alleRecensie[x].bericht+
+					"</td><td>"+alleRecensie[x].beoordeling+
+					"</td><td><button onclick=verwijderen("
+					+alleRecensie[x].id+
+					")>verwijder</button></td></tr>";
+			}
+			eindString += "</table>";
+			document.getElementById("alleRecensieTabel").innerHTML = eindString;
+		}
+	    }
+        xhr.open("GET",db+"/allerecensie",true);
+        xhr.send();
+    }
+              
+    function zoeken(zoekopdracht){
+        if(zoekopdracht!=""){
+        var xhr = new XMLHttpRequest();
+        var eindString = "<table border=1>";
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+                var gezocht = JSON.parse(this.responseText)
+
+                for(var x = 0;x<gezocht.length;x++){
+                    eindString += 
+                        "<tr><td>" +gezocht[x].naam+
+                        "</td><td>"+gezocht[x].titel+
+                        "</td><td>"+gezocht[x].bericht+
+                        "</td><td>"+gezocht[x].beoordeling+
+                        "</td></tr>";
+                }
+                    eindString += "</table>";
+                    document.getElementById("gezochtTabel").innerHTML = eindString;
+            }
+        }
+              
+        xhr.open("GET", "http://20.8.203.9:8082/zoekrecensienaam/"+zoekopdracht, true);
+        xhr.send();
+        console.log(zoekopdracht);
+        console.log(document.getElementById("inputzoekrecensie").type);
+        
+    }else{
+        alert("Zoek veld leeg.");
+        }
+    }
+        
+
+    //DELETE methods 
+    function verwijderen(deid){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+            }
+        }
+        xhr.open("DELETE", "http://20.8.203.9:8082/verwijderrecensie/"+deid, true);
+        xhr.send();
+        console.log("item verwijderd");
+    }
+
+    //POST methods 
+    function toevoegen(){
+        var derecensie = {}; //maakt hier een lege JSON variable  
+        //JSON vullen met informatie met waarde van input field in forms 
+        derecensie.naam = document.getElementById("naamrecensie").value;
+        derecensie.titel = document.getElementById("titelrecensie").value;
+        derecensie.bericht = document.getElementById("berichtrecensie").value;
+        derecensie.beoordeling = document.getElementById("beoordelingrecensie").value;
+
+        if(!derecensie.naam || !derecensie.beoordeling){
+            alert("Naam en beoordeling verplicht.")
+        }else{
+        var deJSON = JSON.stringify(derecensie);
+        var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    console.log(deJSON);
+                }
+            }
+        xhr.open("POST","http://20.8.203.9:8082/voegrecensietoe",true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(deJSON);
+        console.log("item toegevoegd.");
+        }
+    }
+    
+    //Overige functions 
+    function clearFields(){
+        document.getElementById("naamrecensie").value ="";
+        document.getElementById("titelrecensie").value ="";
+        document.getElementById("berichtrecensie").value ="";
+        document.getElementById("beoordelingrecensie").value ="";
+        
+    }
+
+    function clearTable(){
+        document.getElementById("alleRecensieTabel").innerHTML = "";
+    }
+    
+</script>
+
+
+<style>
+    label {
+        display:inline-block;
+        width:160px;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        margin-bottom:10px;
+    }
+    li{
+        list-style:none;
+    }
+    header{
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+    div{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    td{
+        margin-bottom:10px;
+    }
+    #loading{
+        display:none;
+    }
+</style>
+
+<body>
+    <div id="menudiv"></div>
+    <header> <h1>ReceptenApp!</h1></header>
+    <header><h4>Voeg recensie toe:</h2></header>
+        
+    <label for="naamrecensie">Naam recept:</label>
+    <input id="naamrecensie"/><br>
+    <label for="titelrecensie">Titel:</label>
+    <input id="titelrecensie"/><br>
+    <label for="berichtrecensie">Bericht:</label>
+    <input id="berichtrecensie"/><br>
+    <label for="beoordelingrecensie">Beoordeling 0-10:</label>
+    <input id="beoordelingrecensie"/><br>
+       
+    <button onclick="toevoegen()">Toevoegen</button>
+    <button onclick="clearFields()">Reset invoer</button><br><br>
+    <button onclick="toonRecensie()">Toon/refresh alle recensies</button>
+    <div id="alleRecensieTabel"> </div>
+    <button onclick="clearTable()">Verstop tabel</button><br><br>
+
+    <header><h4>Zoek op naam recensie:</h4></header>
+    <input id="inputzoekrecensie">
+    <button onclick="zoeken(document.getElementById('inputzoekrecensie').value)">Zoek</button><br>
+    <div id="gezochtTabel"></div>
+    
+    
+</body>
+</html>
