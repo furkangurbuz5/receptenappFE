@@ -112,6 +112,46 @@
         }
         xhr.send(deJSON);   
         }
+
+    function zoeken(zoekopdracht){
+        if(zoekopdracht!=""){
+            var xhr = new XMLHttpRequest();
+            var eindString = "<table border=1>";
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    var gezocht = JSON.parse(this.responseText)
+
+                    for(var x = 0;x<gezocht.length;x++){
+                        eindString +=
+                            "<tr><td>" +gezocht[x].naam+
+                            "</td><td>" +gezocht[x].aantal+
+                            "</td><td>" +gezocht[x].calorieen+
+                            "</td><td>" +gezocht[x].ingredienten+
+                            "</td><td>" +gezocht[x].bereiding+
+                            "</td><td>" +gezocht[x].land+
+                            "</td><td>" +gezocht[x].tijd+
+                            "</td></tr>"
+
+                    }
+                    eindString += "</table>";
+                    document.getElementById("gezochtTabel").innerHTML = eindString;
+                }
+            }
+            console.log(parseInt(zoekopdracht));
+            if(isNaN(parseInt(zoekopdracht))){
+                xhr.open("GET", "http://localhost:8082/zoekreceptnaam/"+zoekopdracht, true);
+                xhr.send();
+                console.log(zoekopdracht);
+                console.log(document.getElementById("inputzoekrecept").type)
+            } else {
+                xhr.open("GET", "http://http://localhost:8082/zoekrecepttijd/"+zoekopdracht, true);
+                xhr.send();
+                console.log(zoekopdracht)
+            }
+        }else{
+            alert("Zoek veld leeg");
+        }
+    }
         
         
     
@@ -179,6 +219,11 @@
     <button onclick="toevoegen()">Toevoegen</button>
     <button onclick="toonRecepten()">Toon alle Recepten</button>
     <div id="alleReceptenTabel"></div>
+
+    <header><h4>Zoek op naam recept:</h4></header>
+    <input id="inputzoekrecept">
+    <button onclick="zoeken(document.getElementById('inputzoekrecept').value)">Zoek</button><br>
+    <div id="gezochtTabel"></div>
 
 
 </body>
