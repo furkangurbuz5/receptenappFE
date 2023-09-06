@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ingredienten</title>
 </head>
 <script src="js/script.js"></script>
 <script>
@@ -12,27 +12,34 @@
         menu();
     }
    
-    function toonRecensie(){
+    function toonIngredient(){
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){
 		if(this.readyState == 4){
-			var alleRecensie = JSON.parse(this.responseText);
+			var alleIngredient = JSON.parse(this.responseText);
 			var eindString = "<table border=1>";
-			for(var x = 0;x<alleRecensie.length;x++){
+            console.log(alleIngredient);
+            eindString += "<tr><td>"+"naam"+"</td>";
+            eindString += "<td>"+"voedingswaarde"+"</td>";
+            eindString += "<td>"+"eenheid"+"</td>";
+            eindString += "<td>"+"allergenen"+"</td>";
+            eindString += "<td>"+"halal"+"</td>";
+			for(var x = 0;x<alleIngredient.length;x++){
 				eindString += 
-					"<tr><td>" + alleRecensie[x].naam+
-					"</td><td>"+alleRecensie[x].titel+
-					"</td><td>"+alleRecensie[x].bericht+
-					"</td><td>"+alleRecensie[x].beoordeling+
+					"<tr><td>" + alleIngredient[x].naam+
+					"</td><td>"+alleIngredient[x].voedingswaarde+
+					"</td><td>"+alleIngredient[x].eenheid+
+					"</td><td>"+alleIngredient[x].allergeen+
+                    "</td><td>"+alleIngredient[x].halal+
 					"</td><td><button onclick=verwijderen("
-					+alleRecensie[x].id+
+					+alleIngredient[x].id+
 					")>verwijder</button></td></tr>";
 			}
 			eindString += "</table>";
-			document.getElementById("alleRecensieTabel").innerHTML = eindString;
+			document.getElementById("alleIngredientTabel").innerHTML = eindString;
 		}
 	    }
-        xhr.open("GET",db+"/allerecensie",true);
+        xhr.open("GET",db+"/alleingredient",true);
         xhr.send();
     }
               
@@ -75,31 +82,33 @@
             if(this.readyState == 4){
             }
         }
-        xhr.open("DELETE", "http://20.8.203.9:8082/verwijderrecensie/"+deid, true);
+        xhr.open("DELETE", "http://20.8.203.9:8082/verwijderingredient/"+deid, true);
         xhr.send();
         console.log("item verwijderd");
     }
 
     //POST methods 
     function toevoegen(){
-        var derecensie = {}; //maakt hier een lege JSON variable  
+        var deingredient = {}; //maakt hier een lege JSON variable  
         //JSON vullen met informatie met waarde van input field in forms 
-        derecensie.naam = document.getElementById("naamrecensie").value;
-        derecensie.titel = document.getElementById("titelrecensie").value;
-        derecensie.bericht = document.getElementById("berichtrecensie").value;
-        derecensie.beoordeling = document.getElementById("beoordelingrecensie").value;
+        deingredient.naam = document.getElementById("naamingredient").value;
+        deingredient.voedingswaarde = document.getElementById("voedingswaarde").value;
+        deingredient.eenheid = document.getElementById("eenheid").value;
+        deingredient.allergeen = document.getElementById("allergeen").value;
+        deingredient.halal = document.getElementById("halal").value;
 
-        if(!derecensie.naam || !derecensie.beoordeling){
-            alert("Naam en beoordeling verplicht.")
+
+        if(!deingredient.naam || !deingredient.eenheid){
+            alert("Naam en eenheid verplicht.")
         }else{
-        var deJSON = JSON.stringify(derecensie);
+        var deJSON = JSON.stringify(deingredient);
         var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function(){
                 if(this.readyState == 4){
                     console.log(deJSON);
                 }
             }
-        xhr.open("POST","http://20.8.203.9:8082/voegrecensietoe",true);
+        xhr.open("POST","http://20.8.203.9:8082/voegingredienttoe",true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(deJSON);
         console.log("item toegevoegd.");
@@ -108,15 +117,16 @@
     
     //Overige functions 
     function clearFields(){
-        document.getElementById("naamrecensie").value ="";
-        document.getElementById("titelrecensie").value ="";
-        document.getElementById("berichtrecensie").value ="";
-        document.getElementById("beoordelingrecensie").value ="";
-        
+        document.getElementById("naamingredient").value ="";
+        document.getElementById("voedingswaarde").value ="";
+        document.getElementById("eenheid").value ="";
+        document.getElementById("allergeen").value ="";
+        document.getElementById("halal").value ="";
+
     }
 
     function clearTable(){
-        document.getElementById("alleRecensieTabel").innerHTML = "";
+        document.getElementById("alleIngredientTabel").innerHTML = "";
     }
     
 </script>
@@ -149,27 +159,29 @@
 
 <body>
     <div id="menudiv"></div>
-    <header> <h1>ReceptenApp!</h1></header>
-    <header><h4>Voeg recensie toe:</h2></header>
+    <header> <h1>ReceptenApp! - Ingrediënten</h1></header>
+    <header><h4>Voeg ingredient toe:</h2></header>
         
-    <label for="naamrecensie">Naam recept:</label>
-    <input id="naamrecensie"/><br>
-    <label for="titelrecensie">Titel:</label>
-    <input id="titelrecensie"/><br>
-    <label for="berichtrecensie">Bericht:</label>
-    <input id="berichtrecensie"/><br>
-    <label for="beoordelingrecensie">Beoordeling 0-10:</label>
-    <input id="beoordelingrecensie"/><br>
+    <label for="naamingredient">Naam ingredient:</label>
+    <input id="naamingredient"/><br>
+    <label for="voedingswaarde">Voedingswaarde:</label>
+    <input id="voedingswaarde"/><br>
+    <label for="eenheid">Eenheid:</label>
+    <input id="eenheid"/><br>
+    <label for="allergeen">Allergenen:</label>
+    <input id="allergeen"/><br>
+    <label for="halal">Halal:</label>
+    <input id="halal"/><br>
        
     <button onclick="toevoegen()">Toevoegen</button>
     <button onclick="clearFields()">Reset invoer</button><br><br>
-    <button onclick="toonRecensie()">Toon/refresh alle recensies</button>
-    <div id="alleRecensieTabel"> </div>
+    <button onclick="toonIngredient()">Toon/refresh alle ingredienten</button>
+    <div id="alleIngredientTabel"> </div>
     <button onclick="clearTable()">Verstop tabel</button><br><br>
 
-    <header><h4>Zoek op naam recensie:</h4></header>
-    <input id="inputzoekrecensie">
-    <button onclick="zoeken(document.getElementById('inputzoekrecensie').value)">Zoek</button><br>
+    <header><h4>Zoek op naam ingredient:</h4></header>
+    <input id="inputzoekingredient">
+    <button onclick="zoeken(document.getElementById('inputzoekingredient').value)">Zoek</button><br>
     <div id="gezochtTabel"></div>
     
     
