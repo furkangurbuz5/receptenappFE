@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingredienten</title>
+
+</head>
+<script>
+
+
+    window.onload=function(){
+        menu();
+    }
+   
+    function toonIngredient(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+		if(this.readyState == 4){
+			var alleIngredient = JSON.parse(this.responseText);
+			var eindString = "<table border=1>";
+            console.log(alleIngredient);
+            eindString += "<tr><td>"+"naam"+"</td>";
+            eindString += "<td>"+"voedingswaarde"+"</td>";
+            eindString += "<td>"+"eenheid"+"</td>";
+            eindString += "<td>"+"allergenen"+"</td>";
+            eindString += "<td>"+"halal"+"</td>";
+			for(var x = 0;x<alleIngredient.length;x++){
+				eindString += 
+					"<tr><td>" + alleIngredient[x].naam+
+					"</td><td>"+alleIngredient[x].voedingswaarde+
+					"</td><td>"+alleIngredient[x].eenheid+
+					"</td><td>"+alleIngredient[x].allergeen+
+                    "</td><td>"+alleIngredient[x].halal+
+					"</td><td><button onclick=verwijderen("
+					+alleIngredient[x].id+
+					")>verwijder</button></td></tr>";
+			}
+			eindString += "</table>";
+			document.getElementById("alleIngredientTabel").innerHTML = eindString;
+		}
+	    }
+        xhr.open("GET",db+"/alleingredient",true);
+        xhr.send();
+    }
+              
+    function zoeken(zoekopdracht){
+        if(zoekopdracht!=""){
+        var xhr = new XMLHttpRequest();
+        var eindString = "<table border=1>";
+        xhr.onreadystatechange = function(){
+
+            if(this.readyState == 4){
+               console.log(this.responseText); 
+               var alleGebruikers = JSON.parse(this.responseText);
+               var eindString = "<table border=1>"
+               for(var x = 0; x < alleGebruikers.length; x++){
+                 eindString += 
+                 "<tr><td id=\"naamfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].naam+"</td></tr>"+
+                 "<tr><td id =\"geboortedatumfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].geboorteDatum+"</td></tr>"+
+                 "<tr><td id =\"adresfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].adresGegevens+"</td></tr>"+
+                 "<tr><td id =\"emailfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].eMail+"</td></tr>" +
+                 "<tr><td><button onclick=verwijderen("+alleGebruikers[x].id+")>Verwijder</button</td></tr>"
+        
+                
+
+               }
+               eindString += "</table>";
+               document.getElementById("alleGebruikersTabel").innerHTML = eindString;
+            }
+        }
+        xhr.open("GET","http://localhost:8082/allegebruiker", true);
+        xhr.send();
+    }
+
+     function toevoegen(){
+        
+        var gebruiker= {};
+        gebruiker.naam = document.getElementById("naamgebruiker").value;
+        gebruiker.geboorteDatum = document.getElementById("geboortedatum").value;
+        gebruiker.adresGegevens = document.getElementById("adresgegevens").value;
+        gebruiker.eMail = document.getElementById("email").value;
+
+
+        var deJSON = JSON.stringify(gebruiker);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+               console.log("toevoegen gelukt");
+            }
+        }
+        xhr.open("POST","http://localhost:8082/voeggebruikertoe", true);
+        xhr.setRequestHeader("Content-Type","application/json");
+        xhr.send(deJSON);
+    }
+
+    function verwijderen(deid){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+
+            }
+        }
+        xhr.open("DELETE", "http://20.8.203.9:8082/verwijderingredient/"+deid, true);
+        xhr.send();
+        console.log("item verwijderd");
+    }
+
+    //POST methods 
+    function toevoegen(){
+        var deingredient = {}; //maakt hier een lege JSON variable  
+        //JSON vullen met informatie met waarde van input field in forms 
+        deingredient.naam = document.getElementById("naamingredient").value;
+        deingredient.voedingswaarde = document.getElementById("voedingswaarde").value;
+        deingredient.eenheid = document.getElementById("eenheid").value;
+        deingredient.allergeen = document.getElementById("allergeen").value;
+        deingredient.halal = document.getElementById("halal").value;
+
+
+        if(!deingredient.naam || !deingredient.eenheid){
+            alert("Naam en eenheid verplicht.")
+        }else{
+        var deJSON = JSON.stringify(deingredient);
+        var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    console.log(deJSON);
+                }
+            }
+        xhr.open("POST","http://20.8.203.9:8082/voegingredienttoe",true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(deJSON);
+        console.log("item toegevoegd.");
+        }
+    }
+    
+    //Overige functions 
+    function clearFields(){
+        document.getElementById("naamingredient").value ="";
+        document.getElementById("voedingswaarde").value ="";
+        document.getElementById("eenheid").value ="";
+        document.getElementById("allergeen").value ="";
+        document.getElementById("halal").value ="";
+
+    }
+
+    function clearTable(){
+        document.getElementById("alleIngredientTabel").innerHTML = "";
+
+    }
+    
+</script>
+
+<style>
+     label {
+        display:inline-block;
+        width:200px;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        margin-bottom:10px;
+    }
+    li{
+        list-style:none;
+    }
+    header{
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+    div{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    td{
+        margin-bottom:10px;
+    }
+
+</style>
+<body>
+
+    <div id="menudiv"></div>
+    <header> <h1>ReceptenApp! - Ingrediënten</h1></header>
+    <header><h4>Voeg ingredient toe:</h2></header>
+        
+    <label for="naamingredient">Naam ingredient:</label>
+    <input id="naamingredient"/><br>
+    <label for="voedingswaarde">Voedingswaarde:</label>
+    <input id="voedingswaarde"/><br>
+    <label for="eenheid">Eenheid:</label>
+    <input id="eenheid"/><br>
+    <label for="allergeen">Allergenen:</label>
+    <input id="allergeen"/><br>
+    <label for="halal">Halal:</label>
+    <input id="halal"/><br>
+       
+    <button onclick="toevoegen()">Toevoegen</button>
+    <button onclick="clearFields()">Reset invoer</button><br><br>
+    <button onclick="toonIngredient()">Toon/refresh alle ingredienten</button>
+    <div id="alleIngredientTabel"> </div>
+    <button onclick="clearTable()">Verstop tabel</button><br><br>
+
+    <header><h4>Zoek op naam ingredient:</h4></header>
+    <input id="inputzoekingredient">
+    <button onclick="zoeken(document.getElementById('inputzoekingredient').value)">Zoek</button><br>
+    <div id="gezochtTabel"></div>
+    
+    
+
+</body>

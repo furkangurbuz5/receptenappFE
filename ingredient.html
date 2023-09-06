@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Gebruiker</title>
+
 </head>
 <script>
+
+
+    window.onload=function(){
+        menu();
+    }
+   
+
     function toonGebruikers(){
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function(){
@@ -62,6 +71,7 @@
         }
         xhr.open("DELETE", "http://localhost:8082/verwijdergebruiker/"+deid, true);
         xhr.send();
+
     }
     
 </script>
@@ -89,6 +99,7 @@
 
 </style>
 <body>
+
     <li> 
         <label for="naamgebruiker">Gebruikersnaam</label>
         <input id="naamgebruiker">
@@ -112,6 +123,7 @@
     <button onclick="toevoegen()">Toevoegen</button>
     <button onclick="toonGebruikers()">Toon alle gebruikers </button>
     <div id="alleGebruikersTabel"></div>
+
 
 </body>
 </html>
