@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gebruiker</title>
+</head>
+<script>
+    function toonGebruikers(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+               console.log(this.responseText); 
+               var alleGebruikers = JSON.parse(this.responseText);
+               var eindString = "<table border=1>"
+               for(var x = 0; x < alleGebruikers.length; x++){
+                 eindString += 
+                 "<tr><td id=\"naamfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].naam+"</td></tr>"+
+                 "<tr><td id =\"geboortedatumfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].geboorteDatum+"</td></tr>"+
+                 "<tr><td id =\"adresfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].adresGegevens+"</td></tr>"+
+                 "<tr><td id =\"emailfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].eMail+"</td></tr>" +
+                 "<tr><td><button onclick=verwijderen("+alleGebruikers[x].id+")>Verwijder</button</td></tr>"
+        
+                
+
+               }
+               eindString += "</table>";
+               document.getElementById("alleGebruikersTabel").innerHTML = eindString;
+            }
+        }
+        xhr.open("GET","http://localhost:8082/allegebruiker", true);
+        xhr.send();
+    }
+
+     function toevoegen(){
+        
+        var gebruiker= {};
+        gebruiker.naam = document.getElementById("naamgebruiker").value;
+        gebruiker.geboorteDatum = document.getElementById("geboortedatum").value;
+        gebruiker.adresGegevens = document.getElementById("adresgegevens").value;
+        gebruiker.eMail = document.getElementById("email").value;
+
+
+        var deJSON = JSON.stringify(gebruiker);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+               console.log("toevoegen gelukt");
+            }
+        }
+        xhr.open("POST","http://localhost:8082/voeggebruikertoe", true);
+        xhr.setRequestHeader("Content-Type","application/json");
+        xhr.send(deJSON);
+    }
+
+    function verwijderen(deid){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4){
+
+            }
+        }
+        xhr.open("DELETE", "http://localhost:8082/verwijdergebruiker/"+deid, true);
+        xhr.send();
+    }
+    
+</script>
+
+<style>
+     label {
+        display:inline-block;
+        width:200px;
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+        margin-bottom:10px;
+    }
+    li{
+        list-style:none;
+    }
+    header{
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+    div{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    td{
+        margin-bottom:10px;
+    }
+
+</style>
+<body>
+    <li> 
+        <label for="naamgebruiker">Gebruikersnaam</label>
+        <input id="naamgebruiker">
+    </li>
+
+    <li> 
+        <label for="geboortedatum">Geboortedatum</label>
+        <input id="geboortedatum">
+    </li>
+
+    <li> 
+        <label for="adresgegevens">Adres</label>
+        <input id="adresgegevens">
+    </li>
+
+    <li> 
+        <label for="email">Email</label>
+        <input id="email">
+    </li>
+
+    <button onclick="toevoegen()">Toevoegen</button>
+    <button onclick="toonGebruikers()">Toon alle gebruikers </button>
+    <div id="alleGebruikersTabel"></div>
+
+</body>
+</html>
