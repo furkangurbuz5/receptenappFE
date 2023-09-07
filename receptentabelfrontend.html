@@ -75,7 +75,7 @@
 
             }
         }
-        xhr.open("DELETE", "http://localhost:8082/verwijderrecept/"+deid, true);
+        xhr.open("DELETE",db+"/verwijderrecept/"+deid, true);
         xhr.send();
     }
 
@@ -105,7 +105,7 @@
         alert(derecept.naam);
         var deJSON = JSON.stringify(derecept);
         var xhr = new XMLHttpRequest();
-        xhr.open("PUT","http://localhost:8082/recept/aanpassen/"+deid+"/"+derecept.naam, true );
+        xhr.open("PUT",db+"/recept/aanpassen/"+deid+"/"+derecept.naam, true );
         xhr.setRequestHeader("Content-type", "application/json");
         if(this.readyState == 4){
 
@@ -139,12 +139,12 @@
             }
             console.log(parseInt(zoekopdracht));
             if(isNaN(parseInt(zoekopdracht))){
-                xhr.open("GET", "http://localhost:8082/zoekreceptnaam/"+zoekopdracht, true);
+                xhr.open("GET", db+"/zoekreceptnaam/"+zoekopdracht, true);
                 xhr.send();
                 console.log(zoekopdracht);
                 console.log(document.getElementById("inputzoekrecept").type)
             } else {
-                xhr.open("GET", "http://http://localhost:8082/zoekrecepttijd/"+zoekopdracht, true);
+                xhr.open("GET", db+"/zoekrecepttijd/"+zoekopdracht, true);
                 xhr.send();
                 console.log(zoekopdracht)
             }
