@@ -6,6 +6,8 @@
     <title>Ingredienten</title>
 
 </head>
+
+<script src="js/script.js"></script>
 <script>
 
 
@@ -69,7 +71,7 @@
                document.getElementById("alleGebruikersTabel").innerHTML = eindString;
             }
         }
-        xhr.open("GET","http://localhost:8082/allegebruiker", true);
+        xhr.open("GET","db+/allegebruiker", true);
         xhr.send();
     }
 }
