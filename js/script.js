@@ -1,4 +1,5 @@
-var db = "http://20.8.203.9:8082";
+// var db = "http://20.8.203.9:8082";
+var db = "http://localhost:8082";
 
 function menu(){
 	var a= document.getElementById("menudiv").innerHTML=

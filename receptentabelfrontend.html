@@ -1,232 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recepten</title>
 
+
     <script src="js/script.js"></script>
     <script>
-        window.onload=function(){
+        window.onload = function () {
             menu();
+            toonRecepten();
         }
 
-        function toonRecepten(){
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function(){
-            if(this.readyState == 4){
-               console.log(this.responseText); 
-               var alleRecepten = JSON.parse(this.responseText);
-               var eindString = "<table border=1>"
-               for(var x = 0; x < alleRecepten.length; x++){
-                 eindString += 
-                 "<tr><td id=\"naamfield"+alleRecepten[x].id+"\">"+alleRecepten[x].naam+"</td></tr>"+
-                 "<tr><td id =\"aantalfield"+alleRecepten[x].id+"\">"+alleRecepten[x].aantal+"</td></tr>"+
-                 "<tr><td id =\"calorieenfield"+alleRecepten[x].id+"\">"+alleRecepten[x].calorieen+"</td></tr>"+
-                 "<tr><td id =\"ingredientenfield"+alleRecepten[x].id+"\">"+alleRecepten[x].ingredienten+"</td></tr>"+
-                 "<tr><td id =\"bereidingfield"+alleRecepten[x].id+"\">"+alleRecepten[x].bereiding+"</td></tr>"+
-                 "<tr><td id =\"landfield"+alleRecepten[x].id+"\">"+alleRecepten[x].land+"</td></tr>"+
-                 "<tr><td id =\"tijdfield"+alleRecepten[x].id+"\">"+alleRecepten[x].tijd+"</td></tr>"+
-                 "<tr><td><button onclick=verwijderen("+alleRecepten[x].id+")>Verwijder</button></td><td><button onclick=aanpassen("+alleRecepten[x].id+")>Aanpassen</button></td><td><button onclick=opslaan("+alleRecepten[x].id+")>Opslaan</button></tr>"
-               
-                
-
-               }
-               eindString += "</table>";
-               document.getElementById("alleReceptenTabel").innerHTML = eindString;
-            }
-        }
-        xhr.open("GET",db+"/derecepten", true);
-        xhr.send();
-    }
-    function toevoegen(){
-        
-        var derecept = {};
-        derecept.naam = document.getElementById("naamrecept").value;
-
-        derecept.aantal = document.getElementById("aantalmensen").value;
-        derecept.categorie = {
-                } 
-        derecept.categorie.id = 1;
-        derecept.calorieen = document.getElementById("calorieen").value;
-        derecept.ingredienten = document.getElementById("ingredienten").value;
-        derecept.land = document.getElementById("land").value;
-        derecept.tijd = document.getElementById("kooktijd").value;
-        derecept.bereiding = document.getElementById("bereiding").value;
-
-
-        var deJSON = JSON.stringify(derecept);
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function(){
-            if(this.readyState == 4){
-               console.log("toevoegen gelukt");
-            }
-        }
-        xhr.open("POST",db+"/voegrecepttoe", true);
-        xhr.setRequestHeader("Content-Type","application/json");
-        xhr.send(deJSON);
-    }
-    
-
-    function verwijderen(deid){
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function(){
-            if(this.readyState == 4){
-
-            }
-        }
-        xhr.open("DELETE",db+"/verwijderrecept/"+deid, true);
-        xhr.send();
-    }
-
-    function aanpassen(deid){
-        alert(deid);
-        document.getElementById("naamfield"+deid).innerHTML="<input id=\"naamrecepta\">"
-        document.getElementById("aantalfield"+deid).innerHTML="<input id=\"aantalrecepta\">"
-        document.getElementById("calorieenfield"+deid).innerHTML="<input id=\"calorieenrecepta\">"
-        document.getElementById("ingredientenfield"+deid).innerHTML="<input id=\"ingredientenrecepta\">"
-        document.getElementById("bereidingfield"+deid).innerHTML="<input id=\"bereidingrecepta\">"
-        document.getElementById("landfield"+deid).innerHTML="<input id=\"landrecepta\">"
-        document.getElementById("tijdfield"+deid).innerHTML="<input id=\"tijdrecepta\">"
-        
-      
-
-    }
-
-    function opslaan(deid, nieuwenaam){
-        var derecept= {};
-        derecept.naam = document.getElementById("naamrecepta").value;
-        derecept.aantal = document.getElementById("aantalrecepta").value;
-        derecept.calorieen = document.getElementById("calorieenrecepta").value;
-        derecept.ingredienten = document.getElementById("ingredientenrecepta").value;
-        derecept.bereiding = document.getElementById("bereidingrecepta").value;
-        derecept.land = document.getElementById("landrecepta").value;
-        derecept.tijd = document.getElementById("tijdrecepta").value;
-        alert(derecept.naam);
-        var deJSON = JSON.stringify(derecept);
-        var xhr = new XMLHttpRequest();
-        xhr.open("PUT",db+"/recept/aanpassen/"+deid+"/"+derecept.naam, true );
-        xhr.setRequestHeader("Content-type", "application/json");
-        if(this.readyState == 4){
-
-        }
-        xhr.send(deJSON);   
-        }
-
-    function zoeken(zoekopdracht){
-        if(zoekopdracht!=""){
+        function toonRecepten() {
             var xhr = new XMLHttpRequest();
-            var eindString = "<table border=1>";
-            xhr.onreadystatechange = function(){
-                if(this.readyState == 4){
-                    var gezocht = JSON.parse(this.responseText)
-
-                    for(var x = 0;x<gezocht.length;x++){
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    console.log(this.responseText);
+                    var alleRecepten = JSON.parse(this.responseText);
+                    var eindString = "<table border=1>"
+                    for (var x = 0; x < alleRecepten.length; x++) {
                         eindString +=
-                            "<tr><td>" +gezocht[x].naam+
-                            "</td><td>" +gezocht[x].aantal+
-                            "</td><td>" +gezocht[x].calorieen+
-                            "</td><td>" +gezocht[x].ingredienten+
-                            "</td><td>" +gezocht[x].bereiding+
-                            "</td><td>" +gezocht[x].land+
-                            "</td><td>" +gezocht[x].tijd+
-                            "</td></tr>"
+                            "<tr><td id=\"naamfield" + alleRecepten[x].id + "\">" + alleRecepten[x].naam + "</td></tr>" +
+                            "<tr><td id =\"aantalfield" + alleRecepten[x].id + "\">" + alleRecepten[x].aantal + "</td></tr>" +
+                            "<tr><td id =\"calorieenfield" + alleRecepten[x].id + "\">" + alleRecepten[x].calorieen + "</td></tr>" +
+                            "<tr><td id =\"ingredientenfield" + alleRecepten[x].id + "\">" + alleRecepten[x].ingredienten + "</td></tr>" +
+                            "<tr><td id =\"bereidingfield" + alleRecepten[x].id + "\">" + alleRecepten[x].bereiding + "</td></tr>" +
+                            "<tr><td id =\"categoryfield" + alleRecepten[x].id + "\">" + alleRecepten[x].categorieen + "</td></tr>" +
+                            "<tr><td id =\"landfield" + alleRecepten[x].id + "\">" + alleRecepten[x].land + "</td></tr>" +
+                            "<tr><td id =\"tijdfield" + alleRecepten[x].id + "\">" + alleRecepten[x].tijd + "</td></tr>" +
+                            "<tr><td><button onclick=verwijderen(" + alleRecepten[x].id + ")>Verwijder</button></td><td><button onclick=aanpassen(" + alleRecepten[x].id + ")>Aanpassen</button></td><td><button onclick=opslaan(" + alleRecepten[x].id + ")>Opslaan</button></tr>"
+
+
 
                     }
                     eindString += "</table>";
-                    document.getElementById("gezochtTabel").innerHTML = eindString;
+                    document.getElementById("alleReceptenTabel").innerHTML = eindString;
                 }
             }
-            console.log(parseInt(zoekopdracht));
-            if(isNaN(parseInt(zoekopdracht))){
-                xhr.open("GET", db+"/zoekreceptnaam/"+zoekopdracht, true);
-                xhr.send();
-                console.log(zoekopdracht);
-                console.log(document.getElementById("inputzoekrecept").type)
-            } else {
-                xhr.open("GET", db+"/zoekrecepttijd/"+zoekopdracht, true);
-                xhr.send();
-                console.log(zoekopdracht)
-            }
-        }else{
-            alert("Zoek veld leeg");
+            xhr.open("GET", db + "/derecepten", true);
+            xhr.send();
         }
-    }
+        function toevoegen() {
+
+            var derecept = {};
+            derecept.naam = document.getElementById("naamrecept").value;
+
+            derecept.aantal = document.getElementById("aantalmensen").value;
+            derecept.categorieen = document.getElementById("category").value;
+            derecept.calorieen = document.getElementById("calorieen").value;
+            derecept.ingredienten = document.getElementById("ingredienten").value;
+            derecept.land = document.getElementById("land").value;
+            derecept.tijd = document.getElementById("kooktijd").value;
+            derecept.bereiding = document.getElementById("bereiding").value;
+
+
+            var deJSON = JSON.stringify(derecept);
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    console.log("toevoegen gelukt");
+                }
+            }
+            xhr.open("POST", db + "/voegrecepttoe", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            console.log(deJSON);
+            xhr.send(deJSON);
+        }
+
+
+        function verwijderen(deid) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+
+                }
+            }
+            xhr.open("DELETE", db + "/verwijderrecept/" + deid, true);
+            xhr.send();
+        }
+
+        function aanpassen(deid) {
+            alert(deid);
+            document.getElementById("naamfield" + deid).innerHTML = "<input id=\"naamrecepta\">"
+            document.getElementById("aantalfield" + deid).innerHTML = "<input id=\"aantalrecepta\">"
+            document.getElementById("calorieenfield" + deid).innerHTML = "<input id=\"calorieenrecepta\">"
+            document.getElementById("ingredientenfield" + deid).innerHTML = "<input id=\"ingredientenrecepta\">"
+            document.getElementById("bereidingfield" + deid).innerHTML = "<input id=\"bereidingrecepta\">"
+            document.getElementById("landfield" + deid).innerHTML = "<input id=\"landrecepta\">"
+            document.getElementById("tijdfield" + deid).innerHTML = "<input id=\"tijdrecepta\">"
+
+
+
+        }
+
+        function opslaan(deid, nieuwenaam) {
+            var derecept = {};
+            derecept.naam = document.getElementById("naamrecepta").value;
+            derecept.aantal = document.getElementById("aantalrecepta").value;
+            derecept.calorieen = document.getElementById("calorieenrecepta").value;
+            derecept.ingredienten = document.getElementById("ingredientenrecepta").value;
+            derecept.bereiding = document.getElementById("bereidingrecepta").value;
+            derecept.land = document.getElementById("landrecepta").value;
+            derecept.tijd = document.getElementById("tijdrecepta").value;
+            alert(derecept.naam);
+            var deJSON = JSON.stringify(derecept);
+            var xhr = new XMLHttpRequest();
+            xhr.open("PUT", db + "/recept/aanpassen/" + deid + "/" + derecept.naam, true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            if (this.readyState == 4) {
+
+            }
+            xhr.send(deJSON);
+        }
+
+        function zoeken(zoekopdracht) {
+            if (zoekopdracht != "") {
+                var xhr = new XMLHttpRequest();
+                var eindString = "<table border=1>";
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var gezocht = JSON.parse(this.responseText)
+
+                        for (var x = 0; x < gezocht.length; x++) {
+                            eindString +=
+                                "<tr><td>" + gezocht[x].naam +
+                                "</td><td>" + gezocht[x].aantal +
+                                "</td><td>" + gezocht[x].calorieen +
+                                "</td><td>" + gezocht[x].ingredienten +
+                                "</td><td>" + gezocht[x].bereiding +
+                                "</td><td>" + gezocht[x].land +
+                                "</td><td>" + gezocht[x].tijd +
+                                "</td></tr>"
+
+                        }
+                        eindString += "</table>";
+                        document.getElementById("gezochtTabel").innerHTML = eindString;
+                    }
+                }
+                console.log(parseInt(zoekopdracht));
+                if (isNaN(parseInt(zoekopdracht))) {
+                    xhr.open("GET", db + "/zoekreceptnaam/" + zoekopdracht, true);
+                    xhr.send();
+                    console.log(zoekopdracht);
+                    console.log(document.getElementById("inputzoekrecept").type)
+                } else {
+                    xhr.open("GET", db + "/zoekrecepttijd/" + zoekopdracht, true);
+                    xhr.send();
+                    console.log(zoekopdracht)
+                }
+            } else {
+                alert("Zoek veld leeg");
+            }
+        }
+
         
-        
-    
+
+        function filterRecipes(filteropdracht) {
+            cat = document.getElementById("categoryFilter").value;
+            filtijd = document.getElementById("timeFilter").value;
+            filaantal = document.getElementById("servingsFilter").value;
+            filland = document.getElementById("inputLand").value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    console.log(this.responseText);
+                    var alleRecepten = JSON.parse(this.responseText);
+                    var eindString = "<table border=1>"
+                    for (var x = 0; x < alleRecepten.length; x++) {
+                        eindString +=
+                            "<tr><td id=\"naamfield" + alleRecepten[x].id + "\">" + alleRecepten[x].naam + "</td></tr>" +
+                            "<tr><td id =\"aantalfield" + alleRecepten[x].id + "\">" + alleRecepten[x].aantal + "</td></tr>" +
+                            "<tr><td id =\"calorieenfield" + alleRecepten[x].id + "\">" + alleRecepten[x].calorieen + "</td></tr>" +
+                            "<tr><td id =\"ingredientenfield" + alleRecepten[x].id + "\">" + alleRecepten[x].ingredienten + "</td></tr>" +
+                            "<tr><td id =\"bereidingfield" + alleRecepten[x].id + "\">" + alleRecepten[x].bereiding + "</td></tr>" +
+                            "<tr><td id =\"categoryfield" + alleRecepten[x].id + "\">" + alleRecepten[x].categorieen + "</td></tr>" +
+                            "<tr><td id =\"landfield" + alleRecepten[x].id + "\">" + alleRecepten[x].land + "</td></tr>" +
+                            "<tr><td id =\"tijdfield" + alleRecepten[x].id + "\">" + alleRecepten[x].tijd + "</td></tr>" +
+                            "<tr><td><button onclick=verwijderen(" + alleRecepten[x].id + ")>Verwijder</button></td><td><button onclick=aanpassen(" + alleRecepten[x].id + ")>Aanpassen</button></td><td><button onclick=opslaan(" + alleRecepten[x].id + ")>Opslaan</button></tr>"
+
+
+
+                    }
+                    eindString += "</table>";
+                    document.getElementById("filterTabel").innerHTML = eindString;
+                }
+            }
+            baseAPIString = "/recepten/zoeken";
+            firstParam = false;
+            if (cat != null) {
+                baseAPIString += "?categorie=" + cat;
+                firstParam = true;
+               
+            }
+            if (filaantal != null) {
+                if(firstParam) {
+                    baseAPIString += "&";
+                } else {
+                    baseAPIString += "?";
+                    firstParam = true;
+                }
+                baseAPIString += "aantal=" + filaantal;
+            }
+            if(filtijd != null) {
+                if(firstParam) {
+                    baseAPIString += "&";
+                } else {
+                    baseAPIString += "?";
+                    firstParam = true;
+                }
+                baseAPIString += "tijd=" + filtijd;
+                
+            }
+            if(filland != null) {
+                if(firstParam) {
+                    baseAPIString += "&";
+                } else {
+                    baseAPIString += "?";
+                }
+                baseAPIString += "land=" + filland;
+            }
+            xhr.open("GET", db + baseAPIString, true);
+            xhr.send();
+
+            
+        }
+
+
+
     </script>
 </head>
 
 <style>
     label {
-        display:inline-block;
-        width:200px;
-        font-family:Verdana, Geneva, Tahoma, sans-serif;
-        margin-bottom:10px;
+        display: inline-block;
+        width: 200px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-bottom: 10px;
     }
-    li{
-        list-style:none;
+
+    li {
+        list-style: none;
     }
-    header{
-        font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+    header {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
-    div{
-        margin-top:10px;
-        margin-bottom:10px;
+
+    div {
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
-    td{
-        margin-bottom:10px;
+
+    td {
+        margin-bottom: 10px;
     }
 </style>
+
 <body>
+
+
+
     <div id="menudiv"></div>
-    <header> <h1>ReceptenApp! - Recepten </h1></header>
-        <header><h4>Voeg recept toe:</h2></header>
+    <header>
+        <h1>ReceptenApp! - Recepten </h1>
+    </header>
+    <header>
+        <h4>Voeg recept toe:</h2>
+    </header>
     <li>
-     <label for="naamrecept">Naam:</label>
-     <input id="naamrecept">
+        <label for="naamrecept">Naam:</label>
+        <input id="naamrecept">
     </li>
 
     <li>
-     <label for="aantalmensen">Aantal Personen:</label>
-     <input id="aantalmensen">
-    </li>
-    
-    <li>
-     <label for="calorieen">Calorieen:</label>
-     <input id="calorieen">
+        <label for="aantalmensen">Aantal Personen:</label>
+        <input type="number" id="aantalmensen" min="1">
     </li>
 
     <li>
-     <label for="ingredienten">Ingredienten:</label>
-     <input id="ingredienten">
+        <label for="calorieen">Calorieen:</label>
+        <input id="calorieen">
+    </li>
+
+    <li>
+        <label for="ingredienten">Ingredienten:</label>
+        <input id="ingredienten">
     </li>
 
     <li>
         <label for="bereiding">Bereidingswijze:</label>
         <input id="bereiding">
     </li>
-    
     <li>
-     <label for="land">Land Van Herkomst:</label>
-     <input id="land">
+        <label for="category">Category:</label>
+        <select id="category">
+            <option value="Hoofdgerecht">Hoofdgerecht</option>
+            <option value="Bijgerecht">Bijgerecht</option>
+            <option value="Voorgerecht">Voorgerecht</option>
+            <option value="Salade">Salade</option>
+            <option value="Vegetarisch">Vegetarisch</option>
+            <option value="Soep">Soep</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Barbecue">Barbecue</option>
+            <option value="Nagerecht">Nagerecht</option>
+        </select>
     </li>
 
     <li>
-     <label for="kooktijd">Kooktijd:</label>
-     <input id="kooktijd">
+        <label for="land">Land Van Herkomst:</label>
+        <input id="land">
     </li>
-    
+
+    <li>
+        <label for="kooktijd">Kooktijd:</label>
+        <input type="number" id="kooktijd" min="5" step="5">
+    </li>
+
     <button onclick="toevoegen()">Toevoegen</button>
-    <button onclick="toonRecepten()">Toon alle Recepten</button>
-    <div id="alleReceptenTabel"></div>
 
-    <header><h4>Zoek op naam recept:</h4></header>
+
+
+    <header>
+        <h4>Zoek op naam recept:</h4>
+    </header>
     <input id="inputzoekrecept">
     <button onclick="zoeken(document.getElementById('inputzoekrecept').value)">Zoek</button><br>
     <div id="gezochtTabel"></div>
 
+    <header>
+        <h4>Filteren Recepten:</h4>
+    </header>
+    <div id="filterenrecepten">
+    <label for="categoryFilter">Category:</label>
+    <select id="categoryFilter">
+        <option value="Alle">Alle</option>
+        <option value="Hoofdgerecht">Hoofdgerecht</option>
+        <option value="Bijgerecht">Bijgerecht</option>
+        <option value="Voorgerecht">Voorgerecht</option>
+        <option value="Salade">Salade</option>
+        <option value="Vegetarisch">Vegetarisch</option>
+        <option value="Soep">Soep</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Barbecue">Barbecue</option>
+        <option value="Nagerecht">Nagerecht</option>
+    </select>
+    <label for="servingsFilter">Aantal Personen:</label>
+    <input type="number" id="servingsFilter" min="1" placeholder="Min Servings">
+    <label for="timeFilter">Maximale Kooktijd:</label>
+    <input type="number" id="timeFilter" min="5" step = "5" placeholder="Max kooktijd (mins)">
+    <input id="inputLand" placeholder="Land">
+    </div>
+    <button onclick="filterRecipes('filterenrecepten')">Zoek</button><br>
 
+    <ul id="filterTabel"></ul>
+
+    <div id="alleReceptenTabel"></div>
 </body>
+
 </html>
