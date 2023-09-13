@@ -1,0 +1,96 @@
+
+/* Apply a background color and set font for the entire page */
+body {
+background-color: #f0f0f0;
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+}
+
+/* Style the header */
+header h1{
+background-color: #333;
+color: #fff;
+text-align: center;
+padding: 20px 0;
+}
+
+
+/* Style the h4 in the header */
+header h4 {
+font-size: 18px;
+}
+
+/* Center labels and input fields horizontally */
+div {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Style labels and input fields */
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    text-align: left; /* Reset text alignment for labels */
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: left; /* Reset text alignment for inputs */
+  }
+  
+  /* Style the buttons */
+  button {
+    background-color: #333;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  
+  /* Style the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ccc;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Style the "Verstop tabel" button */
+  button:last-child {
+    margin-right: 0;
+  }
+  
+  /* Style the search input and button */
+  #inputzoekkookgerei {
+    width: 70%;
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  
+  /* Hide the loading element by default */
+  #loading {
+    display: none;
+  }
+  
+  
