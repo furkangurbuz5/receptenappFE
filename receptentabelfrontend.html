@@ -45,7 +45,35 @@
             xhr.open("GET", db + "/derecepten", true);
             xhr.send();
         }
-       
+        function toevoegen() {
+
+            var derecept = {};
+            derecept.naam = document.getElementById("naamrecept").value;
+
+            derecept.aantal = document.getElementById("aantalmensen").value;
+            derecept.categorieen = document.getElementById("category").value;
+            derecept.calorieen = document.getElementById("calorieen").value;
+            derecept.ingredienten = document.getElementById("ingredienten").value;
+            derecept.land = document.getElementById("land").value;
+            derecept.tijd = document.getElementById("kooktijd").value;
+            derecept.bereiding = document.getElementById("bereiding").value;
+            derecept.categorie = {"id":1, "naam": "w"};
+
+
+
+            var deJSON = JSON.stringify(derecept);
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    console.log("toevoegen gelukt");
+                }
+            }
+            xhr.open("POST", db + "/voegrecepttoe", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            console.log(deJSON);
+            xhr.send(deJSON);
+        }
+
 
 
         function verwijderen(deid) {

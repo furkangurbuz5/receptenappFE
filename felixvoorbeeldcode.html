@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <script src="js/script.js"></script>
+    <script>
+        function toonAlleRecepten(){
+            fetch(db+"/derecepten")
+            .then(r => r.json())
+            .then(d=>toonRecepten(d))
+        }
+        function toonRecepten(derecepten){
+            console.log(derecepten);
+            let returnString = "";
+            for(let x = 0; x < derecepten.length; x++){
+                returnString += 
+                `
+                    <td>${derecepten[x].naam}</td>
+                    <td><button onclick=ganaarpagina(${derecepten[x].id})>details</button></td>
+                `;
+            }
+            document.getElementById("receptentabel").innerHTML = returnString;
+        }
+        function ganaarpagina(receptid){
+            window.location = "felixrecdetails.html?rid="+receptid
+        }
+    </script>
+</head>
+<body>
+    <button onclick="toonAlleRecepten()">alle recepten</button>
+    <div id="receptentabel"></div>
+</body>
+</html>
