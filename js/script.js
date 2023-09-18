@@ -9,7 +9,6 @@ function menu(){
 	<a href=recensie.html> Recensies </a> 
 	<a href=tempingredient.html> Ingredienten </a>
 	<a href=gebruiker.html> Mijn pagina </a>`;
-	
 }
 
  //GET methods

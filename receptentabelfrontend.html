@@ -24,21 +24,21 @@
                     var alleRecepten = JSON.parse(this.responseText);
                     var eindString = "<table border=1>"
                     for (var x = 0; x < alleRecepten.length; x++) {
-                        eindString +=
-                            "<tr><td id=\"naamfield" + alleRecepten[x].id + "\">" + alleRecepten[x].naam + "</td></tr>" +
+                        eindString += 
+                        "<tr><td id=\"naamfield" + alleRecepten[x].id + "\">" + alleRecepten[x].naam + "</td></tr>" +
                             "<tr><td id =\"aantalfield" + alleRecepten[x].id + "\">" + alleRecepten[x].aantal + "</td></tr>" +
-                            "<tr><td id =\"calorieenfield" + alleRecepten[x].id + "\">" + alleRecepten[x].calorieen + "</td></tr>" +
-                            "<tr><td id =\"ingredientenfield" + alleRecepten[x].id + "\">" + alleRecepten[x].ingredienten + "</td></tr>" +
-                            "<tr><td id =\"bereidingfield" + alleRecepten[x].id + "\">" + alleRecepten[x].bereiding + "</td></tr>" +
+                            //"<tr><td id =\"calorieenfield" + alleRecepten[x].id + "\">" + alleRecepten[x].calorieen + "</td></tr>" +
+                            //"<tr><td id =\"ingredientenfield" + alleRecepten[x].id + "\">" + alleRecepten[x].ingredienten + "</td></tr>" +
+                            //"<tr><td id =\"bereidingfield" + alleRecepten[x].id + "\">" + alleRecepten[x].bereiding + "</td></tr>" +
                             "<tr><td id =\"categoryfield" + alleRecepten[x].id + "\">" + alleRecepten[x].categorieen + "</td></tr>" +
-                            "<tr><td id =\"landfield" + alleRecepten[x].id + "\">" + alleRecepten[x].land + "</td></tr>" +
+                            //"<tr><td id =\"landfield" + alleRecepten[x].id + "\">" + alleRecepten[x].land + "</td></tr>" +
                             "<tr><td id =\"tijdfield" + alleRecepten[x].id + "\">" + alleRecepten[x].tijd + "</td></tr>" +
-                            "<tr><td><button onclick=verwijderen(" + alleRecepten[x].id + ")>Verwijder</button></td><td><button onclick=aanpassen(" + alleRecepten[x].id + ")>Aanpassen</button></td><td><button onclick=opslaan(" + alleRecepten[x].id + ")>Opslaan</button></tr>"
+                            "<tr><td><button onclick=verwijderen(" + alleRecepten[x].id + ")>Verwijder</button></td><td><button onclick=aanpassen(" + alleRecepten[x].id + ")>Aanpassen</button></td><td><button onclick=opslaan(" + alleRecepten[x].id + ")>Opslaan</button></td><td><button onclick=ganaarrecept("+ alleRecepten[x].id +")>Details</button></td></tr>"
 
 
 
                     }
-                    eindString += "</table>";
+                   eindString += "</table>";
                     document.getElementById("alleReceptenTabel").innerHTML = eindString;
                 }
             }
@@ -73,6 +73,7 @@
             console.log(deJSON);
             xhr.send(deJSON);
         }
+
 
 
         function verwijderen(deid) {
@@ -120,7 +121,7 @@
             xhr.send(deJSON);
         }
 
-        function zoeken(zoekopdracht) {
+        function zoeken(zoekopdracht){ 
             if (zoekopdracht != "") {
                 var xhr = new XMLHttpRequest();
                 var eindString = "<table border=1>";
@@ -168,6 +169,8 @@
             filaantal = document.getElementById("servingsFilter").value;
             filland = document.getElementById("inputLand").value;
 
+        
+
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
@@ -184,13 +187,13 @@
                             "<tr><td id =\"categoryfield" + alleRecepten[x].id + "\">" + alleRecepten[x].categorieen + "</td></tr>" +
                             "<tr><td id =\"landfield" + alleRecepten[x].id + "\">" + alleRecepten[x].land + "</td></tr>" +
                             "<tr><td id =\"tijdfield" + alleRecepten[x].id + "\">" + alleRecepten[x].tijd + "</td></tr>" +
-                            "<tr><td><button onclick=verwijderen(" + alleRecepten[x].id + ")>Verwijder</button></td><td><button onclick=aanpassen(" + alleRecepten[x].id + ")>Aanpassen</button></td><td><button onclick=opslaan(" + alleRecepten[x].id + ")>Opslaan</button></tr>"
+                            "<tr><td><button onclick=verwijderen(" + alleRecepten[x].id + ")>Verwijder</button></td><td><button onclick=aanpassen(" + alleRecepten[x].id + ")>Aanpassen</button></td><td><button onclick=opslaan(" + alleRecepten[x].id + ")>Opslaan</button> </td></tr>"
 
 
 
                     }
                     eindString += "</table>";
-                    document.getElementById("filterTabel").innerHTML = eindString;
+                    document.getElementById("alleReceptenTabel").innerHTML = eindString;
                 }
             }
             baseAPIString = "/recepten/zoeken";
@@ -233,6 +236,11 @@
             
         }
 
+        function ganaarrecept(deid) {
+            window.location = "receptdetails.html?id="+deid
+        
+        }
+
 
 
     </script>
@@ -265,69 +273,10 @@
 </style>
 
 <body>
-
-
-
     <div id="menudiv"></div>
     <header>
         <h1>ReceptenApp! - Recepten </h1>
     </header>
-    <header>
-        <h4>Voeg recept toe:</h2>
-    </header>
-    <li>
-        <label for="naamrecept">Naam:</label>
-        <input id="naamrecept">
-    </li>
-
-    <li>
-        <label for="aantalmensen">Aantal Personen:</label>
-        <input type="number" id="aantalmensen" min="1">
-    </li>
-
-    <li>
-        <label for="calorieen">Calorieen:</label>
-        <input id="calorieen">
-    </li>
-
-    <li>
-        <label for="ingredienten">Ingredienten:</label>
-        <input id="ingredienten">
-    </li>
-
-    <li>
-        <label for="bereiding">Bereidingswijze:</label>
-        <input id="bereiding">
-    </li>
-    <li>
-        <label for="category">Category:</label>
-        <select id="category">
-            <option value="Hoofdgerecht">Hoofdgerecht</option>
-            <option value="Bijgerecht">Bijgerecht</option>
-            <option value="Voorgerecht">Voorgerecht</option>
-            <option value="Salade">Salade</option>
-            <option value="Vegetarisch">Vegetarisch</option>
-            <option value="Soep">Soep</option>
-            <option value="Lunch">Lunch</option>
-            <option value="Barbecue">Barbecue</option>
-            <option value="Nagerecht">Nagerecht</option>
-        </select>
-    </li>
-
-    <li>
-        <label for="land">Land Van Herkomst:</label>
-        <input id="land">
-    </li>
-
-    <li>
-        <label for="kooktijd">Kooktijd:</label>
-        <input type="number" id="kooktijd" min="5" step="5">
-    </li>
-
-    <button onclick="toevoegen()">Toevoegen</button>
-
-
-
     <header>
         <h4>Zoek op naam recept:</h4>
     </header>
@@ -357,10 +306,11 @@
     <label for="timeFilter">Maximale Kooktijd:</label>
     <input type="number" id="timeFilter" min="5" step = "5" placeholder="Max kooktijd (mins)">
     <input id="inputLand" placeholder="Land">
-    </div>
     <button onclick="filterRecipes('filterenrecepten')">Zoek</button><br>
+    </div>
+    
 
-    <ul id="filterTabel"></ul>
+    <div id="filterTabel"></div>
 
     <div id="alleReceptenTabel"></div>
 </body>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recept</title>
+    <script src="js/script.js"></script>
+    <script>
+        window.onload = function () {
+            menu();
+            
+        }
+        window.onload = function () {
+            var url_string = window.location.href; 
+            var url = new URL(url_string);
+            var paramValue = url.searchParams.get("id");
+
+            fetch("http://localhost:8082/receptdetails/" + paramValue)
+            .then(d=>d.json())
+            .then(r=>vulrecept(r))
+        }
+
+        function vulrecept(hetrecept) {
+        document.getElementById("naamrecept").innerHTML = hetrecept.naam
+        document.getElementById("aantalrecept").innerHTML = hetrecept.aantal
+        document.getElementById("calorieenrecept").innerHTML = hetrecept.calorieen
+        document.getElementById("ingredientenrecept").innerHTML = hetrecept.ingredienten
+        document.getElementById("bereidingrecept").innerHTML = hetrecept.bereiding
+        document.getElementById("categorierecept").innerHTML = hetrecept.categorieen
+        document.getElementById("landrecept").innerHTML = hetrecept.land
+        document.getElementById("tijdrecept").innerHTML = hetrecept.tijd
+        }
+        
+
+
+    </script>
+    
+</head>
+
+
+<body>
+    <div id = naamrecept></div>
+    <div id = aantalrecept></div>
+    <div id = calorieenrecept></div>
+    <div id = ingredientenrecept></div>
+    <div id = bereidingrecept></div>
+    <div id = categorierecept></div>
+    <div id = landrecept></div>
+    <div id = tijdrecept></div>
+</body>
+</html>
