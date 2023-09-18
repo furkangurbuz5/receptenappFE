@@ -3,7 +3,7 @@ var db = "http://localhost:8082";
 
 function menu(){
 	var a= document.getElementById("menudiv").innerHTML=
-	`<a href=index.html> Kookgerei </a> <a href=receptentabelfrontend.html> Recepten </a> <a href=recensie.html> Recensies </a> <a href=tempingredient.html> Ingredienten </a>`;
+	`<a href=index.html> Kookgerei </a> <a href=receptentabelfrontend.html> Recepten </a> <a href=recensie.html> Recensies </a> <a href=tempingredient.html> Ingredienten </a> <a href=toevoegenrecept.html> Recept Toevoegen </a>`;
 	
 }
 
