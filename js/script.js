@@ -1,5 +1,5 @@
-// var db = "http://20.8.203.9:8082";
-var db = "http://localhost:8082";
+var db = "http://20.23.23.75:8082";
+//var db = "http://localhost:8082";
 
 function menu(){
 	var a= document.getElementById("menudiv").innerHTML=
@@ -32,6 +32,7 @@ function menu(){
 	xhr.open("GET",db+"/alle"+getMap,true);
 	xhr.send();
 }
+
 
 //zoek op type(naam, prijs) en input zoekopdracht 
 function zoeken(zoekopdracht){
