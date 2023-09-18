@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script src="js/script.js"></script>
     <script>
-        var db = "http://20.8.203.9:8082";
+        var db = "http://20.23.23.75:8082";
         window.onload=function(){
             menu();
         }
@@ -60,12 +60,12 @@
             }
             console.log(parseInt(zoekopdracht));
             if (isNaN(parseInt(zoekopdracht))){  
-                    xhr.open("GET", "http://20.8.203.9:8082/zoeknaam/"+zoekopdracht, true);
+                    xhr.open("GET", db+"/zoeknaam/"+zoekopdracht, true);
                     xhr.send();
                     console.log(zoekopdracht);
                     console.log(document.getElementById("inputzoekkookgerei").type);
             } else {
-                    xhr.open("GET", "http://20.8.203.9:8082/zoekprijs/"+zoekopdracht, true);
+                    xhr.open("GET", db+"/zoekprijs/"+zoekopdracht, true);
                     xhr.send();
                     console.log(zoekopdracht);
             }
@@ -82,7 +82,7 @@
                 if(this.readyState == 4){
                 }
             }
-            xhr.open("DELETE", "http://20.8.203.9:8082/verwijderkookgerei/"+deid, true);
+            xhr.open("DELETE", db+"/verwijderkookgerei/"+deid, true);
             xhr.send();
             console.log("item verwijderd");
         }
@@ -107,9 +107,10 @@
                         console.log(deJSON);
                     }
                 }
-            xhr.open("POST","http://20.8.203.9:8082/voegkookgereitoe",true);
+            xhr.open("POST",db+"/voegkookgereitoe",true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(deJSON);
+            console.log(deJSON);
             console.log("item toegevoegd.");
             }
         }
