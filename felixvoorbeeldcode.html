@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>test</title>
+    <script src="js/script.js"></script>
     <script>
         function toonAlleRecepten(){
-            fetch("http://localhost:8082/derecepten")
+            fetch(db+"/derecepten")
             .then(r => r.json())
             .then(d=>toonRecepten(d))
         }
@@ -14,7 +15,8 @@
             console.log(derecepten);
             let returnString = "";
             for(let x = 0; x < derecepten.length; x++){
-                returnString += `
+                returnString += 
+                `
                     <td>${derecepten[x].naam}</td>
                     <td><button onclick=ganaarpagina(${derecepten[x].id})>details</button></td>
                 `;

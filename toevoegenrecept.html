@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <title>Recept Toevoegen</title>
+
+
+    <script src="js/script.js"></script>
+    <script>
+        window.onload = function () {
+            menu(); }
+
+    function toevoegen() {
+
+    var derecept = {};
+    derecept.naam = document.getElementById("naamrecept").value;
+    derecept.aantal = document.getElementById("aantalmensen").value;
+    derecept.categorieen = document.getElementById("category").value;
+    derecept.calorieen = document.getElementById("calorieen").value;
+    derecept.ingredienten = document.getElementById("ingredienten").value;
+    derecept.land = document.getElementById("land").value;
+    derecept.tijd = document.getElementById("kooktijd").value;
+    derecept.bereiding = document.getElementById("bereiding").value;
+
+
+    var deJSON = JSON.stringify(derecept);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+     if (this.readyState == 4) {
+          console.log("toevoegen gelukt");
+        }
+    }
+    xhr.open("POST", db + "/voegrecepttoe", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    console.log(deJSON);
+    xhr.send(deJSON);
+    }
+</script>
+</head>
+<style>
+    label {
+        display: inline-block;
+        width: 200px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-bottom: 10px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    header {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    div {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    td {
+        margin-bottom: 10px;
+    }
+</style>
+<body> 
+    
+
+    <div id="menudiv"></div>
+    <header>
+        <h1>ReceptenApp! - Recepten </h1>
+    </header>
+    <header>
+        <h4>Voeg recept toe:</h2>
+    </header>
+    <li>
+        <label for="naamrecept">Naam:</label>
+        <input id="naamrecept" style = width:600px>
+    </li>
+
+    <li>
+        <label for="aantalmensen">Aantal Personen:</label>
+        <input type="number" id="aantalmensen" min="1">
+    </li>
+
+    <li>
+        <label for="calorieen">Calorieen:</label>
+        <input id="calorieen">
+    </li>
+
+    <li>
+        <label for="ingredienten">Ingredienten:</label>
+        <input id="ingredienten" style = height:200px;width:600px>
+    </li>
+
+    <li>
+        <label for="bereiding">Bereidingswijze:</label>
+        <input id="bereiding" style = height:200px;width:600px>
+    </li>
+    <li>
+        <label for="category">Category:</label>
+        <select id="category">
+            <option value="Hoofdgerecht">Hoofdgerecht</option>
+            <option value="Bijgerecht">Bijgerecht</option>
+            <option value="Voorgerecht">Voorgerecht</option>
+            <option value="Salade">Salade</option>
+            <option value="Vegetarisch">Vegetarisch</option>
+            <option value="Soep">Soep</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Barbecue">Barbecue</option>
+            <option value="Nagerecht">Nagerecht</option>
+        </select>
+    </li>
+
+    <li>
+        <label for="land">Land:</label>
+        <input id="land" style = width:600px>
+    </li>
+
+    <li>
+        <label for="kooktijd">Kooktijd:</label>
+        <input type="number" id="kooktijd" min="5" step="5">
+    </li>
+
+    <button onclick="toevoegen()">Toevoegen</button>   
+</body>
+</html>

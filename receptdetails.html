@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Recept</title>
+    <script src="js/script.js"></script>
+    <script>
+        window.onload = function () {
+            menu();
+            
+        }
+        window.onload = function () {
+            var url_string = window.location.href; 
+            var url = new URL(url_string);
+            var paramValue = url.searchParams.get("id");
+
+            fetch("http://localhost:8082/receptdetails/" + paramValue)
+            .then(d=>d.json())
+            .then(r=>vulrecept(r))
+        }
+
+        function vulrecept(hetrecept) {
+        document.getElementById("naamrecept").innerHTML = hetrecept.naam
+        document.getElementById("aantalrecept").innerHTML = hetrecept.aantal
+        document.getElementById("calorieenrecept").innerHTML = hetrecept.calorieen
+        document.getElementById("ingredientenrecept").innerHTML = hetrecept.ingredienten
+        document.getElementById("bereidingrecept").innerHTML = hetrecept.bereiding
+        document.getElementById("categorierecept").innerHTML = hetrecept.categorieen
+        document.getElementById("landrecept").innerHTML = hetrecept.land
+        document.getElementById("tijdrecept").innerHTML = hetrecept.tijd
+        }
+        
+
+
+    </script>
+    
+</head>
+
+
+<body>
+    <div id=photo></div>
+    <div class="summary", role=banner>
+        <div class="naam">
+            <h1 id="naamrecept"></h1>
+        </div>
+        <div class="sumtijdaantalcalland">
+            <ul class="list" style="list-style: none; margin: 0; padding: 0;">
+                <li class="time">
+                    <h4>Kooktijd: </h4>
+                    <span>
+                        <time id="tijdrecept"></time>
+                    </span>
+                </li>
+
+                <li class="aantal">
+                    <h4>Aantal: </h4> 
+                    <span>
+                        <time id="aantalrecept"></time>
+                    </span>
+                </li>
+                <li class="land">
+                    <h4>Land: </h4>
+                    <span>
+                        <time id="landrecept"></time>
+                    </span>
+                </li>
+                <li class="categorie">
+                    <h4>Categorie: </h4> 
+                    <span>
+                        <time id="categorierecept"></time>
+                    </span>
+                </li>
+                <li class="calorieen">
+                    <h4>Calorieen: </h4>
+                    <span>
+                        <time id="calorieenrecept"></time>
+                    </span>
+                </li>
+
+
+
+            </ul>
+        </div>
+    
+    
+    
+    
+   
+    
+    
+    </div>
+    <h4>Ingredienten:</h4>
+    <div id = ingredientenrecept></div>
+    <h4>Berieding:</h4>
+    <div id = bereidingrecept></div>
+    
+    
+</body>
+</html>

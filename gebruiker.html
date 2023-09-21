@@ -7,6 +7,9 @@
     <title>Gebruiker</title>
 
 </head>
+<script src="js/script.js"></script>
+<script src="js/login-page.js"></script>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
 <script>
 
 
@@ -28,7 +31,9 @@
                  "<tr><td id =\"geboortedatumfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].geboorteDatum+"</td></tr>"+
                  "<tr><td id =\"adresfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].adresGegevens+"</td></tr>"+
                  "<tr><td id =\"emailfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].eMail+"</td></tr>" +
-                 "<tr><td><button onclick=verwijderen("+alleGebruikers[x].id+")>Verwijder</button</td></tr>"
+                 "<tr><td id =\"wachtwoordfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].wachtwoord+"</td></tr>"+
+                 "<tr><td><button onclick=verwijderen("+alleGebruikers[x].id+")>Verwijder</button</td></tr>" 
+                        
         
                 
 
@@ -37,7 +42,7 @@
                document.getElementById("alleGebruikersTabel").innerHTML = eindString;
             }
         }
-        xhr.open("GET","http://localhost:8082/allegebruiker", true);
+        xhr.open("GET",db+"/allegebruiker", true);
         xhr.send();
     }
 
@@ -48,7 +53,7 @@
         gebruiker.geboorteDatum = document.getElementById("geboortedatum").value;
         gebruiker.adresGegevens = document.getElementById("adresgegevens").value;
         gebruiker.eMail = document.getElementById("email").value;
-
+        gebruiker.wachtwoord = document.getElementById("wachtwoord").value;
 
         var deJSON = JSON.stringify(gebruiker);
         var xhr = new XMLHttpRequest();
@@ -57,10 +62,42 @@
                console.log("toevoegen gelukt");
             }
         }
-        xhr.open("POST","http://localhost:8082/voeggebruikertoe", true);
+        xhr.open("POST",db+"/voeggebruikertoe", true);
         xhr.setRequestHeader("Content-Type","application/json");
+        console.log(deJSON);
         xhr.send(deJSON);
+        clearFields();
     }
+
+    function login(deid){
+        
+        var wachtwoord = document.getElementById("psw").value;
+
+        
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (this.readyState == 4){
+            var gebruikers = JSON.parse(this.responseText);
+
+            console.log(gebruikers);
+            }
+        }
+        
+
+        xhr.open("GET",db+"/allegebruiker", true);
+        xhr.setRequestHeader("Content-Type","application/json");
+        xhr.send(deJSON)
+    }
+        
+    function clearFields(){
+        document.getElementById("naamgebruiker").value ="";
+        document.getElementById("geboortedatum").value ="";
+        document.getElementById("adresgegevens").value ="";
+        document.getElementById("email").value ="";
+        document.getElementById("wachtwoord").value ="";
+    }
+
+   
 
     function verwijderen(deid){
         var xhr = new XMLHttpRequest();
@@ -69,7 +106,8 @@
 
             }
         }
-        xhr.open("DELETE", "http://localhost:8082/verwijdergebruiker/"+deid, true);
+        xhr.open("DELETE", db+"/verwijdergebruiker/"+deid, true);
+        console.log("gebruiker verwijderd");
         xhr.send();
 
     }
@@ -99,7 +137,7 @@
 
 </style>
 <body>
-
+    <div id="menudiv"></div>
     <li> 
         <label for="naamgebruiker">Gebruikersnaam</label>
         <input id="naamgebruiker">
@@ -119,11 +157,36 @@
         <label for="email">Email</label>
         <input id="email">
     </li>
+    <li> 
+        <label for="wachtwoord">Wachtwoord</label>
+        <input type="password" id="wachtwoord">
+    </li>
 
     <button onclick="toevoegen()">Toevoegen</button>
     <button onclick="toonGebruikers()">Toon alle gebruikers </button>
+    <div>
+        <ul id="listuser">
+            <h3>Gebruikers:</h3>
+        </ul>
+    </div>
     <div id="alleGebruikersTabel"></div>
 
+
+    <!--- Lijst van gebruikers plus inlog button     -->
+    
+    
+    <form onsubmit="return false">
+        <div class="container">
+        <button type="submit" onclick="login()">Login</button>
+        
+        <label for="uname">Gebruikersnaam: </label>
+        <input type="text" placeholder="Voer gebruikersnaam in" id="uname">
+        <label for="psw">Wachtwoord: </label>
+        <input type="text" placeholder="Voer wachtwoord in" id="psw">
+        
+        
+    </div>
+    </form>
 
 </body>
 </html>
