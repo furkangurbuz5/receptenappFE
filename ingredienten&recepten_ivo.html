@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingredienten & Recepten - Ivo</title>
+    <link rel="stylesheet" type="text/css" href="ingredienten&recepten.css" />
+
+    <script language="javascript" src="ingredient.js"></script>
+    <script language="javascript" src="recept.js"></script>
+    <script language="javascript">
+        let draggeditem = null;
+        onload = async function () {
+
+            // INGREDIENTEN
+            let ingrediententlijst = document.getElementById("ingredienten_library");
+            const response = await fetch("http://localhost:8083/alleingredienten");
+            await response.json()
+                .then((data) => {
+                    data.forEach(element => {
+                        console.log("INGREDIENT DATA:", element);
+                        ingrediententlijst.append(new Ingredient(element).GetDOM());
+                    });
+                });
+
+            // RECEPTEN
+            let receptenlijst = document.getElementById("recepten_library");
+            const response2 = await fetch("http://localhost:8083/allerecepten");
+            await response2.json()
+                .then((data) => {
+                    data.forEach(element => {
+                        console.log("RECEPT DATA:", element);
+                        receptenlijst.append(new Recept(element).GetDOM());
+                    });
+                });
+        };
+    </script>
+</head>
+
+<body>
+    <div class="panels">
+        <div class="ingredientenlijst">
+            <div class="titel">Ingredienten</div>
+            <div class="lijst" id="ingredienten_library"></div>
+        </div>
+
+        <div class="recepten">
+            <div class="titel">Recepten</div>
+            <div class="lijst" id="recepten_library"></div>
+        </div>
+    </div>
+</body>
+
+</html>

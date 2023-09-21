@@ -33,7 +33,7 @@
                             "<tr><td id =\"categoryfield" + alleRecepten[x].id + "\">" + alleRecepten[x].categorieen + "</td></tr>" +
                             //"<tr><td id =\"landfield" + alleRecepten[x].id + "\">" + alleRecepten[x].land + "</td></tr>" +
                             "<tr><td id =\"tijdfield" + alleRecepten[x].id + "\">" + alleRecepten[x].tijd + "</td></tr>" +
-                            "<tr><td><button onclick=verwijderen(" + alleRecepten[x].id + ")>Verwijder</button></td><td><button onclick=aanpassen(" + alleRecepten[x].id + ")>Aanpassen</button></td><td><button onclick=opslaan(" + alleRecepten[x].id + ")>Opslaan</button></td><td><button onclick=ganaarrecept("+ alleRecepten[x].id +")>Details</button></td></tr>"
+                            "<tr><td><button onclick=verwijderen(" + alleRecepten[x].id + ")>Verwijder</button></td><td><button onclick=aanpassen(" + alleRecepten[x].id + ")>Aanpassen</button></td><td><button onclick=ganaarrecept("+ alleRecepten[x].id +")>Details</button></td></tr>"
 
 
 
@@ -88,14 +88,23 @@
         }
 
         function aanpassen(deid) {
-            alert(deid);
-            document.getElementById("naamfield" + deid).innerHTML = "<input id=\"naamrecepta\">"
-            document.getElementById("aantalfield" + deid).innerHTML = "<input id=\"aantalrecepta\">"
-            document.getElementById("calorieenfield" + deid).innerHTML = "<input id=\"calorieenrecepta\">"
-            document.getElementById("ingredientenfield" + deid).innerHTML = "<input id=\"ingredientenrecepta\">"
-            document.getElementById("bereidingfield" + deid).innerHTML = "<input id=\"bereidingrecepta\">"
-            document.getElementById("landfield" + deid).innerHTML = "<input id=\"landrecepta\">"
-            document.getElementById("tijdfield" + deid).innerHTML = "<input id=\"tijdrecepta\">"
+            var eindString = "<table border=1>"
+
+             eindString +=
+                document.getElementById("naamfield" + deid).innerHTML = "<input id=\"naamrecepta\">"
+                document.getElementById("aantalfield" + deid).innerHTML = "<input id=\"aantalrecepta\">"
+                document.getElementById("calorieenfield" + deid).innerHTML = "<input id=\"calorieenrecepta\">"
+                document.getElementById("ingredientenfield" + deid).innerHTML = "<input id=\"ingredientenrecepta\">"
+                document.getElementById("bereidingfield" + deid).innerHTML = "<input id=\"bereidingrecepta\">"
+                document.getElementById("landfield" + deid).innerHTML = "<input id=\"landrecepta\">"
+                document.getElementById("tijdfield" + deid).innerHTML = "<input id=\"tijdrecepta\">"
+                "<td><button onclick=opslaan(" + alleRecepten[x].id + ")>Opslaan</button></td>"
+            
+            eindString = "</table>"
+
+            
+
+
 
 
 
@@ -193,7 +202,7 @@
 
                     }
                     eindString += "</table>";
-                    document.getElementById("alleReceptenTabel").innerHTML = eindString;
+                    document.getElementById("filterTabel").innerHTML = eindString;
                 }
             }
             baseAPIString = "/recepten/zoeken";
