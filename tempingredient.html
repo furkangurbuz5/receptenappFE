@@ -46,7 +46,8 @@
         xhr.open("GET",db+"/alleingredient",true);
         xhr.send();
     }
-              
+    
+    //endpoint moet nog zoekfunctie hebben
     function zoeken(zoekopdracht){
         if(zoekopdracht!=""){
         var xhr = new XMLHttpRequest();
@@ -72,7 +73,7 @@
                document.getElementById("alleGebruikersTabel").innerHTML = eindString;
             }
         }
-        xhr.open("GET","db+/allegebruiker", true);
+        xhr.open("GET",db+"/allegebruiker", true);
         xhr.send();
     }
 }
@@ -131,7 +132,7 @@
                     console.log(deJSON);
                 }
             }
-        xhr.open("POST","http://20.8.203.9:8082/voegingredienttoe",true);
+        xhr.open("POST",db+"/voegingredienttoe",true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(deJSON);
         console.log("item toegevoegd.");

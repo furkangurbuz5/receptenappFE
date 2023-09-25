@@ -58,7 +58,7 @@
             }
         }
               
-        xhr.open("GET", "http://20.8.203.9:8082/zoekrecensienaam/"+zoekopdracht, true);
+        xhr.open("GET", db+"/zoekrecensienaam/"+zoekopdracht, true);
         xhr.send();
         console.log(zoekopdracht);
         console.log(document.getElementById("inputzoekrecensie").type);
@@ -76,7 +76,7 @@
             if(this.readyState == 4){
             }
         }
-        xhr.open("DELETE", "http://20.8.203.9:8082/verwijderrecensie/"+deid, true);
+        xhr.open("DELETE", db+"/verwijderrecensie/"+deid, true);
         xhr.send();
         console.log("item verwijderd");
     }
@@ -100,7 +100,7 @@
                     console.log(deJSON);
                 }
             }
-        xhr.open("POST","http://20.8.203.9:8082/voegrecensietoe",true);
+        xhr.open("POST",db+"/voegrecensietoe",true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(deJSON);
         console.log("item toegevoegd.");
@@ -153,13 +153,13 @@
     <header> <h1>ReceptenApp! - Recensies</h1></header>
     <header><h4>Voeg recensie toe:</h2></header>
         
-    <label for="naamrecensie">Naam recept:</label>
+    <label for="naamrecensie">Naam recensie:</label>
     <input id="naamrecensie"/><br>
     <label for="titelrecensie">Titel:</label>
     <input id="titelrecensie"/><br>
     <label for="berichtrecensie">Bericht:</label>
     <input id="berichtrecensie"/><br>
-    <label for="beoordelingrecensie">Beoordeling 0-10:</label>
+    <label for="beoordelingrecensie">Beoordeling 0 - 10:</label>
     <input id="beoordelingrecensie"/><br>
        
     <button onclick="toevoegen()">Toevoegen</button>
