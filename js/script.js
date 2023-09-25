@@ -6,6 +6,7 @@ function menu(){
 	`<a href=loginpagina.html> Log in </a> 
 	<a href=index.html> Kookgerei </a> 
 	<a href=receptentabelfrontend.html> Recepten </a> 
+	<a href=toevoegenrecept.html> Toevoegen Recept </a> 
 	<a href=recensie.html> Recensies </a> 
 	<a href=tempingredient.html> Ingredienten </a>
 	<a href=gebruiker.html> Mijn pagina </a>

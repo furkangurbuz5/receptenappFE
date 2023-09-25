@@ -1,0 +1,95 @@
+body {
+    padding: 0;
+    margin: 16px;
+}
+
+.panels {
+    display: flex;
+    gap: 10px;
+    align-items: start;
+    justify-content: center;
+
+    DIV {
+        width: 35vw;
+    }
+}
+
+.titel {
+    font-weight: bold;
+    padding: 4px;
+    border-bottom: 1px dotted gray;
+    margin-bottom: 9px;
+    box-sizing: border-box;
+}
+
+.ingredientenlijst {
+    display: flex;
+    flex-direction: column;
+
+    .lijst {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+}
+
+.ingredient {
+    flex: 1;
+    border-radius: 4px;
+    padding: 4px;
+    background-color: #fafafa88;
+    box-sizing: border-box;
+    max-width: -moz-available;
+    cursor: grab;
+
+    .panel_details {
+        display: none;
+    }
+}
+
+.ingredient:active {
+    cursor: grabbing;
+}
+
+.ingredient:hover .panel_details {
+    display: flex;
+    font-size: small;
+    color : #666;
+    white-space: pre;
+    margin-left: 12px;
+}
+
+
+.lijst {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.recept {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    cursor: default;
+    flex: 1;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #d2dcea;
+    box-sizing: border-box;
+    max-width: -moz-available;
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+
+    .ingredient {
+        font-size: small;
+        max-width: -moz-available;
+    }
+}
+
+.ingredient:hover,
+.recept:hover{
+    outline: 2px solid #7e8c9f;
+    outline-offset: 1px;
+}
