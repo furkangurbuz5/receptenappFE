@@ -1,4 +1,4 @@
-//var db = "http://20.23.23.75:8082";
+//var db = "http://20.76.62.108:8082";
 var db = "http://localhost:8082";
 
 function menu(){
