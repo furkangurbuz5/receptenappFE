@@ -33,10 +33,7 @@
                  "<tr><td id =\"emailfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].eMail+"</td></tr>" +
                  "<tr><td id =\"wachtwoordfield"+alleGebruikers[x].id+"\">"+alleGebruikers[x].wachtwoord+"</td></tr>"+
                  "<tr><td><button onclick=verwijderen("+alleGebruikers[x].id+")>Verwijder</button</td></tr>" 
-                        
         
-                
-
                }
                eindString += "</table>";
                document.getElementById("alleGebruikersTabel").innerHTML = eindString;
@@ -172,21 +169,6 @@
     <div id="alleGebruikersTabel"></div>
 
 
-    <!--- Lijst van gebruikers plus inlog button     -->
-    
-    
-    <form onsubmit="return false">
-        <div class="container">
-        <button type="submit" onclick="login()">Login</button>
-        
-        <label for="uname">Gebruikersnaam: </label>
-        <input type="text" placeholder="Voer gebruikersnaam in" id="uname">
-        <label for="psw">Wachtwoord: </label>
-        <input type="text" placeholder="Voer wachtwoord in" id="psw">
-        
-        
-    </div>
-    </form>
 
 </body>
 </html>
