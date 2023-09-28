@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
+    <link rel="stylesheet" type="text/css" href="css/toevoegen.css">
     <title>Recept</title>
     <script src="js/script.js"></script>
     <script>
@@ -16,7 +16,7 @@
             var url = new URL(url_string);
             var paramValue = url.searchParams.get("id");
 
-            fetch("http://localhost:8082/receptdetails/" + paramValue)
+            fetch("hhttp://20.23.23.75:8082/receptdetails/" + paramValue)
             .then(d=>d.json())
             .then(r=>vulrecept(r))
         }
@@ -37,52 +37,74 @@
     </script>
     
 </head>
+<style>
+    label {
+        display: inline-block;
+        width: 200px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-bottom: 10px;
+        font-weight: bold;
+        
+
+    }
+
+    li {
+        list-style: none;
+    }
+
+    header {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    div {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    td {
+        margin-bottom: 10px;
+    }
+    </style>
 
 
 <body>
-    <div id=photo></div>
-    <div class="summary", role=banner>
-        <div class="naam">
-            <h1 id="naamrecept"></h1>
-        </div>
-        <div class="sumtijdaantalcalland">
-            <ul class="list" style="list-style: none; margin: 0; padding: 0;">
-                <li class="time">
-                    <h4>Kooktijd: </h4>
-                    <span>
-                        <time id="tijdrecept"></time>
-                    </span>
-                </li>
+    <div id="menudiv"></div>
+    <header>
+        <h1>ReceptenApp! </h1>
+    </header>
+    <fieldset>
+        <legend id="naamrecept"></legend>
+        
+            
+            <label for="tijdrecept">Kooktijd:</label>
+            <li id="tijdrecept"></li>
+            <label for="aantalrecept"> Aantal:</label>
+            <li id="aantalrecept"></li>
+            <label for="landrecept">Land:</label>
+            <li id="landrecept"></li>
+            <label for="categorierecept">Categorie:</label>
+            <li id="categorierecept"></li>
+            <label for="calorieenrecept">Calorieen:</label>
+            <li id="calorieenrecept"></li>
 
-                <li class="aantal">
-                    <h4>Aantal: </h4> 
-                    <span>
-                        <time id="aantalrecept"></time>
-                    </span>
-                </li>
-                <li class="land">
-                    <h4>Land: </h4>
-                    <span>
-                        <time id="landrecept"></time>
-                    </span>
-                </li>
-                <li class="categorie">
-                    <h4>Categorie: </h4> 
-                    <span>
-                        <time id="categorierecept"></time>
-                    </span>
-                </li>
-                <li class="calorieen">
-                    <h4>Calorieen: </h4>
-                    <span>
-                        <time id="calorieenrecept"></time>
-                    </span>
-                </li>
+            <label for="ingredientenrecept">Ingredienten:</label>
+            <li id="ingredientenrecept"></li>
+            <label for="bereidingrecept">Bereiding:</label>
+            <li id="bereidingrecept"></li>
+
+    </fieldset>
+
+    
+            
+
+                
+            
+               
+               
 
 
 
-            </ul>
-        </div>
+        
     
     
     
@@ -90,11 +112,7 @@
    
     
     
-    </div>
-    <h4>Ingredienten:</h4>
-    <div id = ingredientenrecept></div>
-    <h4>Berieding:</h4>
-    <div id = bereidingrecept></div>
+   
     
     
 </body>

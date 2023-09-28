@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/toevoegen.css">
     <title>Recept Toevoegen</title>
 
 
@@ -19,10 +19,10 @@
     derecept.aantal = document.getElementById("aantalmensen").value;
     derecept.categorieen = document.getElementById("category").value;
     derecept.calorieen = document.getElementById("calorieen").value;
-    derecept.ingredienten = document.getElementById("ingredienten").value;
+    derecept.ingredienten = document.getElementById("ingredienten1").value + "/" + document.getElementById("ingredienten2").value + " " + document.getElementById("ingredienten3").value + " " + document.getElementById("ingredienten4").value + " " + document.getElementById("ingredienten5").value + " " + document.getElementById("ingredienten6").value;
     derecept.land = document.getElementById("land").value;
     derecept.tijd = document.getElementById("kooktijd").value;
-    derecept.bereiding = document.getElementById("bereiding").value;
+    derecept.bereiding = document.getElementById("bereiding1").value + " " + document.getElementById("bereiding2").value + " " + document.getElementById("bereiding3").value + " " + document.getElementById("bereiding4").value + " " + document.getElementById("bereiding5").value + " " + document.getElementById("bereiding6").value;
 
 
     var deJSON = JSON.stringify(derecept);
@@ -63,43 +63,29 @@
     td {
         margin-bottom: 10px;
     }
-</style>
+    </style>
+
+
 <body> 
     
 
     <div id="menudiv"></div>
     <header>
-        <h1>ReceptenApp! - Recepten </h1>
+        <h1>ReceptenApp! - Recept Toevoegen </h1>
     </header>
-    <header>
-        <h4>Voeg recept toe:</h2>
-    </header>
-    <li>
+    <fieldset>
+        <legend>Voeg Recept Toe:</legend>
+    
+        
         <label for="naamrecept">Naam:</label>
-        <input id="naamrecept" style = width:600px>
-    </li>
-
-    <li>
-        <label for="aantalmensen">Aantal Personen:</label>
-        <input type="number" id="aantalmensen" min="1">
-    </li>
-
-    <li>
+        <input id="naamrecept" style = "width:390px;" placeholder="Titel recept">
+        <li><label for="aantalmensen">Aantal:</label>
+        <input type="number" id="aantalmensen" min="1" style="width:40px;">
+        <label for="kooktijd">Kooktijd:</label>
+        <input type="number" id="kooktijd" min="5" step="5" style="width:40px;">
         <label for="calorieen">Calorieen:</label>
-        <input id="calorieen">
-    </li>
-
-    <li>
-        <label for="ingredienten">Ingredienten:</label>
-        <input id="ingredienten" style = height:200px;width:600px>
-    </li>
-
-    <li>
-        <label for="bereiding">Bereidingswijze:</label>
-        <input id="bereiding" style = height:200px;width:600px>
-    </li>
-    <li>
-        <label for="category">Category:</label>
+        <input type="number" id="calorieen" min="10" step="10" style="width:60px;"></li>
+        <li><label for="category">Category:</label>
         <select id="category">
             <option value="Hoofdgerecht">Hoofdgerecht</option>
             <option value="Bijgerecht">Bijgerecht</option>
@@ -111,18 +97,31 @@
             <option value="Barbecue">Barbecue</option>
             <option value="Nagerecht">Nagerecht</option>
         </select>
-    </li>
-
-    <li>
         <label for="land">Land:</label>
-        <input id="land" style = width:600px>
-    </li>
-
-    <li>
-        <label for="kooktijd">Kooktijd:</label>
-        <input type="number" id="kooktijd" min="5" step="5">
-    </li>
-
-    <button onclick="toevoegen()">Toevoegen</button>   
+        <input id="land" style = "width:190px;" placeholder="e.g. Nederland"></li>
+        <h5>Ingredienten:</h5>
+        <li><input id="ingredienten1" style="width:480px; padding:10px;" placeholder="e.g. 1 el kaneel"></li>
+        <li><input id="ingredienten2" style="width:480px; padding:10px;"></li>
+        <li><input id="ingredienten3" style="width:480px; padding:10px;"></li>
+        <li><input id="ingredienten4" style="width:480px; padding:10px;"></li>
+        <li><input id="ingredienten5" style="width:480px; padding:10px;"></li>
+        <li><input id="ingredienten6" style="width:480px; padding:10px;"></li>
+   
+        <h5>Bereiding:</h5>
+        <label for="bereiding1">Stap 1:</label>
+        <li><input id="bereiding1" style="width:480px; padding:10px;" placeholder="e.g. Snij de groenten"></li>
+        <label for="bereiding2">Stap 2:</label>
+        <li><input id="bereiding2" style="width:480px; padding:10px;"></li>
+        <label for="bereiding3">Stap 3:</label>
+        <li><input id="bereiding3" style="width:480px; padding:10px;"></li>
+        <label for="bereiding4">Stap 4:</label>
+        <li><input id="bereiding4" style="width:480px; padding:10px;"></li>
+        <label for="bereiding5">Stap 5:</label>
+        <li><input id="bereiding5" style="width:480px; padding:10px;"></li>
+        <label for="bereiding6">Stap 6:</label>
+        <li><input id="bereiding6" style="width:480px; padding:10px;"></li>
+    <button onclick="toevoegen()">Toevoegen</button>
+</fieldset>
+       
 </body>
 </html>
